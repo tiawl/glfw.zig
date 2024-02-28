@@ -1,0 +1,20 @@
+.{
+  .name = "glfw.zig",
+  .version = "3.4.0",
+  .minimum_zig_version = "0.11.0",
+  .paths = .{
+    "build.zig",
+    "build.zig.zon",
+    "glfw",
+  },
+  .dependencies = .{
+    .vulkan = .{
+      .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/1.3.277.tar.gz",
+      .hash = "1220e8491ca7cda1db9945ab22f6b04185e602bf1407169af37bb0b0b822f0befed7",
+    },
+    .wayland = .{
+      .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.22.0.tar.gz",
+      .hash = "12203cacd42ce7f5828dbb7eb717ce2cfcc63cc6a1f84acd9f2974c30aeeb6bb3e2d",
+    },
+  },
+}
