@@ -107,7 +107,6 @@ pub fn build (builder: *std.Build) !void
   lib.installLibraryHeaders (wayland_dep.artifact ("wayland"));
 
   var sources = try std.BoundedArray ([] const u8, 64).init (0);
-  var flags = try std.BoundedArray ([] const u8, 16).init (0);
 
   const src_path = try builder.build_root.join (builder.allocator, &.{ "glfw", "src", });
   var src = try std.fs.openDirAbsolute (src_path, .{ .iterate = true, });
@@ -124,16 +123,14 @@ pub fn build (builder: *std.Build) !void
         try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
   }
 
-  lib.defineCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
-
-  try flags.appendSlice (&.{
-    "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc",
-  });
+  lib.root_module.addCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
 
   for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
   lib.addCSourceFiles (.{
     .files = sources.slice (),
-    .flags = flags.slice (),
+    .flags = &.{
+      "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc",
+    },
   });
 
   builder.installArtifact (lib);
