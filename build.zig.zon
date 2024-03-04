@@ -10,7 +10,7 @@
   .dependencies = .{
     .vulkan = .{
       .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/1.3.277.tar.gz",
-      .hash = "1220e8491ca7cda1db9945ab22f6b04185e602bf1407169af37bb0b0b822f0befed7",
+      .hash = "12203c85a5bb117fc12117dd0a15b39671758e11219fd33ad54ccd9a9735fce1f393",
     },
     .wayland = .{
       .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.22.0.tar.gz",
