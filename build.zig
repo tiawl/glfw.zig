@@ -1,29 +1,6 @@
 const std = @import ("std");
+const toolbox = @import ("toolbox/toolbox.zig");
 const pkg = .{ .name = "glfw.zig", .version = "3.4", };
-
-fn exec (builder: *std.Build, argv: [] const [] const u8) !void
-{
-  var stdout = std.ArrayList (u8).init (builder.allocator);
-  var stderr = std.ArrayList (u8).init (builder.allocator);
-  errdefer { stdout.deinit (); stderr.deinit (); }
-
-  std.debug.print ("\x1b[35m[{s}]\x1b[0m\n", .{ try std.mem.join (builder.allocator, " ", argv), });
-
-  var child = std.ChildProcess.init (argv, builder.allocator);
-
-  child.stdin_behavior = .Ignore;
-  child.stdout_behavior = .Pipe;
-  child.stderr_behavior = .Pipe;
-
-  try child.spawn ();
-  try child.collectOutput (&stdout, &stderr, 1000);
-
-  const term = try child.wait ();
-
-  if (stdout.items.len > 0) std.debug.print ("{s}", .{ stdout.items, });
-  if (stderr.items.len > 0 and !std.meta.eql (term, std.ChildProcess.Term { .Exited = 0, })) std.debug.print ("\x1b[31m{s}\x1b[0m", .{ stderr.items, });
-  try std.testing.expectEqual (term, std.ChildProcess.Term { .Exited = 0, });
-}
 
 fn update (builder: *std.Build) !void
 {
@@ -38,8 +15,8 @@ fn update (builder: *std.Build) !void
     }
   };
 
-  try exec (builder, &[_][] const u8 { "git", "clone", "https://github.com/glfw/glfw.git", glfw_path, });
-  try exec (builder, &[_][] const u8 { "git", "-C", glfw_path, "checkout", pkg.version, });
+  try toolbox.exec (builder, .{ .argv = &[_][] const u8 { "git", "clone", "https://github.com/glfw/glfw.git", glfw_path, }, });
+  try toolbox.exec (builder, .{ .argv = &[_][] const u8 { "git", "-C", glfw_path, "checkout", pkg.version, }, });
 
   var glfw = try std.fs.openDirAbsolute (glfw_path, .{ .iterate = true, });
   defer glfw.close ();
@@ -68,8 +45,6 @@ pub fn build (builder: *std.Build) !void
   });
 
   lib.linkLibC ();
-  lib.linkSystemLibrary ("X11");
-  lib.linkSystemLibrary ("xkbcommon");
 
   var includes = try std.BoundedArray ([] const u8, 64).init (0);
 
@@ -97,14 +72,7 @@ pub fn build (builder: *std.Build) !void
     .optimize = optimize,
   });
 
-  const wayland_dep = builder.dependency ("wayland", .{
-    .target = target,
-    .optimize = optimize,
-  });
-
-  lib.linkLibrary (wayland_dep.artifact ("wayland"));
   lib.installLibraryHeaders (vulkan_dep.artifact ("vulkan"));
-  lib.installLibraryHeaders (wayland_dep.artifact ("wayland"));
 
   var sources = try std.BoundedArray ([] const u8, 64).init (0);
 
@@ -112,26 +80,68 @@ pub fn build (builder: *std.Build) !void
   var src = try std.fs.openDirAbsolute (src_path, .{ .iterate = true, });
   defer src.close ();
 
-  var it = src.iterate ();
-  while (try it.next ()) |*entry|
+  switch (target.result.os.tag)
   {
-    if ((!std.mem.startsWith (u8, entry.name, "wgl_") and
-      !std.mem.startsWith (u8, entry.name, "win32_") and
-      !std.mem.startsWith (u8, entry.name, "cocoa_") and
-      !std.mem.startsWith (u8, entry.name, "nsgl_")) and
-      std.mem.endsWith (u8, entry.name, ".c") and entry.kind == .file)
-        try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
+    .windows => {
+                  lib.linkSystemLibrary ("gdi32");
+                  lib.linkSystemLibrary ("user32");
+                  lib.linkSystemLibrary ("shell32");
+
+                  var it = src.iterate ();
+                  while (try it.next ()) |*entry|
+                  {
+                    if ((!std.mem.startsWith (u8, entry.name, "linux_") and
+                      !std.mem.startsWith (u8, entry.name, "posix_") and
+                      !std.mem.startsWith (u8, entry.name, "xkb_") and
+                      !std.mem.startsWith (u8, entry.name, "glx_") and
+                      !std.mem.startsWith (u8, entry.name, "x11_") and
+                      !std.mem.startsWith (u8, entry.name, "cocoa_") and
+                      !std.mem.startsWith (u8, entry.name, "nsgl_") and
+                      !std.mem.startsWith (u8, entry.name, "wl_")) and
+                      std.mem.endsWith (u8, entry.name, ".c") and entry.kind == .file)
+                        try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
+                  }
+
+                  for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
+                  lib.addCSourceFiles (.{
+                    .files = sources.slice (),
+                    .flags = &.{ "-D_GLFW_WIN32", "-Isrc", },
+                  });
+                },
+    .macos   => return error.MacOSUnsupported,
+    else     => {
+                  const wayland_dep = builder.dependency ("wayland", .{
+                    .target = target,
+                    .optimize = optimize,
+                  });
+
+                  lib.linkSystemLibrary ("X11");
+                  lib.linkSystemLibrary ("xkbcommon");
+                  lib.linkLibrary (wayland_dep.artifact ("wayland"));
+                  lib.installLibraryHeaders (wayland_dep.artifact ("wayland"));
+
+                  var it = src.iterate ();
+                  while (try it.next ()) |*entry|
+                  {
+                    if ((!std.mem.startsWith (u8, entry.name, "wgl_") and
+                      !std.mem.startsWith (u8, entry.name, "win32_") and
+                      !std.mem.startsWith (u8, entry.name, "cocoa_") and
+                      !std.mem.startsWith (u8, entry.name, "nsgl_")) and
+                      std.mem.endsWith (u8, entry.name, ".c") and entry.kind == .file)
+                        try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
+                  }
+
+                  lib.root_module.addCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
+
+                  for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
+                  lib.addCSourceFiles (.{
+                    .files = sources.slice (),
+                    .flags = &.{
+                      "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc",
+                    },
+                  });
+                },
   }
-
-  lib.root_module.addCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
-
-  for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
-  lib.addCSourceFiles (.{
-    .files = sources.slice (),
-    .flags = &.{
-      "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc",
-    },
-  });
 
   builder.installArtifact (lib);
 }
