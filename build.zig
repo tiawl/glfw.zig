@@ -1,5 +1,5 @@
 const std = @import ("std");
-const toolbox = @import ("toolbox/toolbox.zig");
+const toolbox = @import ("toolbox").toolbox;
 const pkg = .{ .name = "glfw.zig", .version = "3.4", };
 
 fn update (builder: *std.Build) !void
@@ -110,14 +110,19 @@ pub fn build (builder: *std.Build) !void
                 },
     .macos   => return error.MacOSUnsupported,
     else     => {
+                  const X11_dep = builder.dependency ("X11", .{
+                    .target = target,
+                    .optimize = optimize,
+                  });
+
                   const wayland_dep = builder.dependency ("wayland", .{
                     .target = target,
                     .optimize = optimize,
                   });
 
-                  lib.linkSystemLibrary ("X11");
-                  lib.linkSystemLibrary ("xkbcommon");
+                  lib.linkLibrary (X11_dep.artifact ("X11"));
                   lib.linkLibrary (wayland_dep.artifact ("wayland"));
+                  lib.installLibraryHeaders (X11_dep.artifact ("X11"));
                   lib.installLibraryHeaders (wayland_dep.artifact ("wayland"));
 
                   var it = src.iterate ();
