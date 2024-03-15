@@ -1,5 +1,5 @@
 const std = @import ("std");
-const toolbox = @import ("toolbox").toolbox;
+const toolbox = @import ("toolbox");
 const pkg = .{ .name = "glfw.zig", .version = "3.4", };
 
 fn update (builder: *std.Build) !void
@@ -15,8 +15,8 @@ fn update (builder: *std.Build) !void
     }
   };
 
-  try toolbox.exec (builder, .{ .argv = &[_][] const u8 { "git", "clone", "https://github.com/glfw/glfw.git", glfw_path, }, });
-  try toolbox.exec (builder, .{ .argv = &[_][] const u8 { "git", "-C", glfw_path, "checkout", pkg.version, }, });
+  try toolbox.run (builder, .{ .argv = &[_][] const u8 { "git", "clone", "https://github.com/glfw/glfw.git", glfw_path, }, });
+  try toolbox.run (builder, .{ .argv = &[_][] const u8 { "git", "-C", glfw_path, "checkout", pkg.version, }, });
 
   var glfw = try std.fs.openDirAbsolute (glfw_path, .{ .iterate = true, });
   defer glfw.close ();
