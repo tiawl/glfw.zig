@@ -98,7 +98,7 @@ pub fn build (builder: *std.Build) !void
                       !std.mem.startsWith (u8, entry.name, "cocoa_") and
                       !std.mem.startsWith (u8, entry.name, "nsgl_") and
                       !std.mem.startsWith (u8, entry.name, "wl_")) and
-                      std.mem.endsWith (u8, entry.name, ".c") and entry.kind == .file)
+                      toolbox.is_source_file (entry.name) and entry.kind == .file)
                         try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
                   }
 
@@ -132,7 +132,7 @@ pub fn build (builder: *std.Build) !void
                       !std.mem.startsWith (u8, entry.name, "win32_") and
                       !std.mem.startsWith (u8, entry.name, "cocoa_") and
                       !std.mem.startsWith (u8, entry.name, "nsgl_")) and
-                      std.mem.endsWith (u8, entry.name, ".c") and entry.kind == .file)
+                      toolbox.is_source_file (entry.name) and entry.kind == .file)
                         try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
                   }
 

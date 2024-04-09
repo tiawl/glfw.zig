@@ -9,20 +9,20 @@
   },
   .dependencies = .{
     .toolbox = .{
-      .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.1.0.tar.gz",
-      .hash = "12202526ed667cac2cf58d496067e638f3bfbbaa89d0ff9b84a14aea58d7c895347e",
+      .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.2.1.tar.gz",
+      .hash = "1220ef97a41719a5f7f68be8944f99f2ef2343b8fd5ed2727e6ea1e6d2cc146f86b5",
     },
     .vulkan = .{
       .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/1.3.277.tar.gz",
-      .hash = "122024cbcfb369d1fa40eb1604a59ef67b6ff567758b1559e4d5f6ea9977b8d946f2",
+      .hash = "1220ecb2def5d285ca675de22be1081bc1598e22d370459e21c91991d0a5f9a6fcc1",
     },
     .wayland = .{
       .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.22.0.tar.gz",
-      .hash = "1220f413da0a9b05a2bc9ffa9cdaac9bf0e8db22c18001fe0ab41d0fb3034aea37b8",
+      .hash = "1220e015804468df32bcc4b1005446bfb78a21aa5b3fb0dec3bc50e09926614dc072",
     },
     .X11 = .{
       .url = "https://github.com/tiawl/X11.zig/archive/refs/tags/1.8.7.tar.gz",
-      .hash = "12205e3f902d0dadf10f06d94dfb4cbbe507e9ed1aa5f0802fdbedd68bcacfa4153b",
+      .hash = "12202bd7d2ed975cda3dda16b7e822c19103583026d885910fc0740d1ae5cc88268f",
     },
   },
 }
