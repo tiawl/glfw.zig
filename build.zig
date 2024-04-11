@@ -64,7 +64,7 @@ pub fn build (builder: *std.Build) !void
     lib.addIncludePath (.{ .path = include, });
   }
 
-  lib.installHeadersDirectory (try std.fs.path.join (builder.allocator, &.{ "glfw", "include", "GLFW", }), "GLFW");
+  lib.installHeadersDirectory (.{ .path = try std.fs.path.join (builder.allocator, &.{ "glfw", "include", "GLFW", }), }, "GLFW", .{ .include_extensions = &.{ ".h", }, });
   std.debug.print ("[glfw headers dir] {s}\n", .{ try builder.build_root.join (builder.allocator, &.{ "glfw", "include", "GLFW", }), });
 
   const vulkan_dep = builder.dependency ("vulkan", .{
@@ -98,11 +98,13 @@ pub fn build (builder: *std.Build) !void
                       !std.mem.startsWith (u8, entry.name, "cocoa_") and
                       !std.mem.startsWith (u8, entry.name, "nsgl_") and
                       !std.mem.startsWith (u8, entry.name, "wl_")) and
-                      toolbox.is_source_file (entry.name) and entry.kind == .file)
-                        try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
+                      toolbox.is_c_source_file (entry.name) and entry.kind == .file)
+                    {
+                      std.debug.print ("[glfw source] {s}\n", .{ try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }), });
+                      try sources.append (try std.fs.path.join (builder.allocator, &.{ "glfw", "src", builder.dupe (entry.name), }));
+                    }
                   }
 
-                  for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
                   lib.addCSourceFiles (.{
                     .files = sources.slice (),
                     .flags = &.{ "-D_GLFW_WIN32", "-Isrc", },
@@ -132,13 +134,15 @@ pub fn build (builder: *std.Build) !void
                       !std.mem.startsWith (u8, entry.name, "win32_") and
                       !std.mem.startsWith (u8, entry.name, "cocoa_") and
                       !std.mem.startsWith (u8, entry.name, "nsgl_")) and
-                      toolbox.is_source_file (entry.name) and entry.kind == .file)
-                        try sources.append (try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }));
+                      toolbox.is_c_source_file (entry.name) and entry.kind == .file)
+                    {
+                      std.debug.print ("[glfw source] {s}\n", .{ try std.fs.path.join (builder.allocator, &.{ src_path , entry.name, }), });
+                      try sources.append (try std.fs.path.join (builder.allocator, &.{ "glfw", "src", builder.dupe (entry.name), }));
+                    }
                   }
 
                   lib.root_module.addCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
 
-                  for (sources.slice ()) |source| std.debug.print ("[glfw source] {s}\n", .{ source, });
                   lib.addCSourceFiles (.{
                     .files = sources.slice (),
                     .flags = &.{
