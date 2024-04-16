@@ -16,9 +16,8 @@ fn update (builder: *std.Build) !void
     }
   };
 
-  try toolbox.run (builder, .{ .argv = &[_][] const u8 { "git", "clone",
-    "--branch", pkg.version, "--depth", "1",
-    "https://github.com/glfw/glfw.git", glfw_path, }, });
+  try toolbox.clone (builder, "https://github.com/glfw/glfw.git",
+    pkg.version, glfw_path);
 
   var glfw_dir = try std.fs.openDirAbsolute (glfw_path, .{ .iterate = true, });
   defer glfw_dir.close ();
@@ -50,9 +49,6 @@ pub fn build (builder: *std.Build) !void
 
   lib.linkLibC ();
 
-  var includes = try std.BoundedArray ([] const u8, 64).init (0);
-  var sources = try std.BoundedArray ([] const u8, 64).init (0);
-
   var root_dir = try builder.build_root.handle.openDir (".",
     .{ .iterate = true, });
   defer root_dir.close ();
@@ -61,24 +57,11 @@ pub fn build (builder: *std.Build) !void
   while (try walk.next ()) |*entry|
   {
     if (std.mem.startsWith (u8, entry.path, "glfw") and
-      entry.kind == .directory)
-        try includes.append (builder.dupe (entry.path));
+      entry.kind == .directory) toolbox.addInclude (lib, entry.path);
   }
 
-  for (includes.slice ()) |include|
-  {
-    std.debug.print ("[glfw include] {s}\n",
-      .{ try builder.build_root.join (builder.allocator, &.{ include, }), });
-    lib.addIncludePath (.{ .path = include, });
-  }
-
-  lib.installHeadersDirectory (
-    .{ .path = try std.fs.path.join (builder.allocator,
-      &.{ "glfw", "include", "GLFW", }), }, "GLFW",
-        .{ .include_extensions = &.{ ".h", }, });
-  std.debug.print ("[glfw headers dir] {s}\n",
-    .{ try builder.build_root.join (builder.allocator,
-      &.{ "glfw", "include", "GLFW", }), });
+  toolbox.addHeader (lib, try builder.build_root.join (builder.allocator,
+    &.{ "glfw", "include", "GLFW", }), "GLFW", &.{ ".h", });
 
   const vulkan_dep = builder.dependency ("vulkan", .{
     .target = target,
@@ -99,6 +82,8 @@ pub fn build (builder: *std.Build) !void
       lib.linkSystemLibrary ("user32");
       lib.linkSystemLibrary ("shell32");
 
+      const flags = [_][] const u8 { "-D_GLFW_WIN32", "-Isrc", };
+
       var it = src_dir.iterate ();
       while (try it.next ()) |*entry|
       {
@@ -110,20 +95,9 @@ pub fn build (builder: *std.Build) !void
           !std.mem.startsWith (u8, entry.name, "cocoa_") and
           !std.mem.startsWith (u8, entry.name, "nsgl_") and
           !std.mem.startsWith (u8, entry.name, "wl_")) and
-          toolbox.is_c_source_file (entry.name) and entry.kind == .file)
-        {
-          const source_path = try std.fs.path.join (builder.allocator,
-            &.{ src_path , entry.name, });
-          std.debug.print ("[glfw source] {s}\n", .{ source_path, });
-          try sources.append (try std.fs.path.relative (builder.allocator,
-            builder.build_root.path.?, source_path));
-        }
+          toolbox.isCSource (entry.name) and entry.kind == .file)
+            try toolbox.addSource (lib, src_path, entry.name, &flags);
       }
-
-      lib.addCSourceFiles (.{
-        .files = sources.slice (),
-        .flags = &.{ "-D_GLFW_WIN32", "-Isrc", },
-      });
     },
     .macos   => return error.MacOSUnsupported,
     else     => {
@@ -142,6 +116,12 @@ pub fn build (builder: *std.Build) !void
       lib.installLibraryHeaders (X11_dep.artifact ("X11"));
       lib.installLibraryHeaders (wayland_dep.artifact ("wayland"));
 
+      const flags = [_][] const u8
+      {
+        "-D_GLFW_X11", "-D_GLFW_WAYLAND",
+        "-Wno-implicit-function-declaration", "-Isrc",
+      };
+
       var it = src_dir.iterate ();
       while (try it.next ()) |*entry|
       {
@@ -149,25 +129,11 @@ pub fn build (builder: *std.Build) !void
           !std.mem.startsWith (u8, entry.name, "win32_") and
           !std.mem.startsWith (u8, entry.name, "cocoa_") and
           !std.mem.startsWith (u8, entry.name, "nsgl_")) and
-          toolbox.is_c_source_file (entry.name) and entry.kind == .file)
-        {
-          const source_path = try std.fs.path.join (builder.allocator,
-            &.{ src_path , entry.name, });
-          std.debug.print ("[glfw source] {s}\n", .{ source_path, });
-          try sources.append (try std.fs.path.relative (builder.allocator,
-            builder.build_root.path.?, source_path));
-        }
+          toolbox.isCSource (entry.name) and entry.kind == .file)
+            try toolbox.addSource (lib, src_path, entry.name, &flags);
       }
 
       lib.root_module.addCMacro ("WL_MARSHAL_FLAG_DESTROY", "1");
-
-      lib.addCSourceFiles (.{
-        .files = sources.slice (),
-        .flags = &.{
-          "-D_GLFW_X11", "-D_GLFW_WAYLAND",
-          "-Wno-implicit-function-declaration", "-Isrc",
-        },
-      });
     },
   }
 
