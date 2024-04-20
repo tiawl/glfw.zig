@@ -14,4 +14,7 @@ jobs:
     steps:
     - uses: tiawl/spaceporn-dep-action-ci@v1
       with:
-        user: ${{ matrix.repo }}
+        user: "${{ matrix.repo }}.zig"
+        test_build: 'false'
+        test_update: 'true'
+        test_fetch: 'true'
