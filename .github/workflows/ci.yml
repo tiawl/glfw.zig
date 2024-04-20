@@ -15,3 +15,6 @@ jobs:
     - uses: tiawl/spaceporn-dep-action-ci@v1
       with:
         user: ${{ matrix.repo }}
+        test_build: 'false'
+        test_update: 'true'
+        test_fetch: 'true'
