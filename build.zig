@@ -1,8 +1,8 @@
 const std = @import ("std");
 const toolbox = @import ("toolbox");
-const pkg = .{ .name = "glfw.zig", .version = "3.4", };
 
-fn update (builder: *std.Build) !void
+fn update (builder: *std.Build,
+  dependencies: *const toolbox.Dependencies) !void
 {
   const glfw_path = try builder.build_root.join (builder.allocator,
     &.{ "glfw", });
@@ -16,8 +16,7 @@ fn update (builder: *std.Build) !void
     }
   };
 
-  try toolbox.clone (builder, "https://github.com/glfw/glfw.git",
-    pkg.version, glfw_path);
+  try dependencies.clone (builder, "glfw", glfw_path);
 
   var glfw_dir = try std.fs.openDirAbsolute (glfw_path, .{ .iterate = true, });
   defer glfw_dir.close ();
@@ -37,8 +36,38 @@ pub fn build (builder: *std.Build) !void
   const target = builder.standardTargetOptions (.{});
   const optimize = builder.standardOptimizeOption (.{});
 
+  const fetch_option = builder.option (bool, "fetch",
+    "Update .versions folder and build.zig.zon then stop execution")
+      orelse false;
+
+  const dependencies = try toolbox.Dependencies.init (builder,
+  .{
+     .toolbox = .{
+       .name = "tiawl/toolbox",
+       .api = toolbox.Repository.API.github,
+     },
+     .vulkan = .{
+       .name = "tiawl/vulkan.zig",
+       .api = toolbox.Repository.API.github,
+     },
+     .wayland = .{
+       .name = "tiawl/wayland.zig",
+       .api = toolbox.Repository.API.github,
+     },
+     .X11 = .{
+       .name = "tiawl/X11.zig",
+       .api = toolbox.Repository.API.github,
+     },
+   }, .{
+     .glfw = .{
+       .name = "glfw/glfw",
+       .api = toolbox.Repository.API.github,
+     },
+   }, fetch_option);
+
+  if (fetch_option) try toolbox.fetch (builder, "glfw.zig", &dependencies);
   if (builder.option (bool, "update", "Update binding") orelse false)
-    try update (builder);
+    try update (builder, &dependencies);
 
   const lib = builder.addStaticLibrary (.{
     .name = "glfw",
