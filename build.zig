@@ -40,7 +40,7 @@ pub fn build (builder: *std.Build) !void
     "Update .versions folder and build.zig.zon then stop execution")
       orelse false;
 
-  const dependencies = try toolbox.Dependencies.init (builder,
+  var dependencies = try toolbox.Dependencies.init (builder,
   .{
      .toolbox = .{
        .name = "tiawl/toolbox",
@@ -63,9 +63,9 @@ pub fn build (builder: *std.Build) !void
        .name = "glfw/glfw",
        .api = toolbox.Repository.API.github,
      },
-   }, fetch_option);
+   });
 
-  if (fetch_option) try toolbox.fetch (builder, "glfw.zig", &dependencies);
+  if (fetch_option) try dependencies.fetch (builder, "glfw.zig");
   if (builder.option (bool, "update", "Update binding") orelse false)
     try update (builder, &dependencies);
 
