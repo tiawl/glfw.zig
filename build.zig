@@ -29,6 +29,8 @@ fn update (builder: *std.Build,
         try std.fs.deleteTreeAbsolute (try std.fs.path.join (
           builder.allocator, &.{ glfw_path, entry.name, }));
   }
+
+  try toolbox.clean (builder, &.{ "glfw", }, &.{});
 }
 
 pub fn build (builder: *std.Build) !void
