@@ -13,8 +13,8 @@
             .hash = "12202ee09ca215a668c07370f71d8c2cee1946336c8a2160e8976ae1c8d3912406b0",
         },
         .toolbox = .{
-            .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.9.0.tar.gz",
-            .hash = "122079b3521afcfde887d4e076be92421995b5a8bee1611bdbf1019826f37682f82b",
+            .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.9.2.tar.gz",
+            .hash = "1220a1726c2ce32c1776071fb88b62e1f6f6f7f14cefc1670478323f62c0a95b5181",
         },
         .X11 = .{
             .url = "https://github.com/tiawl/X11.zig/archive/refs/tags/libX11-1.8.9.tar.gz",
