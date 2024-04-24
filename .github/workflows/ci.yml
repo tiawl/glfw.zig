@@ -9,11 +9,15 @@ jobs:
   build:
     strategy:
       matrix:
-        repo: [cimgui]
+        repo:
+          - cimgui
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: tiawl/spaceporn-dep-action-ci@v1
       with:
+        repository: "${{ github.repository }}"
+        sha: "${{ github.sha }}"
         user: "${{ matrix.repo }}.zig"
         test_build: 'false'
         test_update: 'true'
