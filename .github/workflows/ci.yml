@@ -19,6 +19,7 @@ jobs:
         repository: "${{ github.repository }}"
         sha: "${{ github.sha }}"
         user: "${{ matrix.repo }}.zig"
+        token: "${{ github.token }}"
         test_build: 'false'
         test_update: 'true'
         test_fetch: 'true'
