@@ -1,0 +1,18 @@
+name: cd pong
+
+on:
+  repository_dispatch:
+    types:
+      - ping
+
+jobs:
+  pong:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: tiawl/spaceporn-dep-action-cd-pong@v1
+      if: ${{ contains(fromJSON('["vulkan.zig", "wayland.zig", "X11.zig"]'), github.event.client_payload.dependency) }}
+      with:
+        dependency: "${{ github.event.client_payload.dependency }}"
+        tag: "${{ github.event.client_payload.tag }}"
+        hash: "${{ github.event.client_payload.hash }}"
