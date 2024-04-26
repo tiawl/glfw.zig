@@ -21,8 +21,8 @@
             .hash = "1220a4c095169ae79ad665c88d90388e965ef7533556e619a68dc7254a85a88e8b51",
         },
         .wayland = .{
-            .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.22.0.tar.gz",
-            .hash = "122090a83bb419da662c6baad2c2ae3eb3209f72541e9ccda4f9fac4284f277ee287",
+            .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.22.91.tar.gz",
+            .hash = "1220355b34d68d041f678ba954e623efdd6f40fc1375f8a1aa9fadc69ccf0abe96c9",
         },
     },
 }
