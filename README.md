@@ -4,13 +4,13 @@ This is a fork of [hexops/glfw](https://github.com/hexops/glfw) which is itself 
 
 ## Why this forkception ?
 
-The intention under this fork is the same as hexops had when they forked [glfw/glfw](https://github.com/glfw/glfw): package GLFW for Zig. So:
-* unnecessary files have been deleted,
-* the build system has been replaced with `build.zig`.
+The intention under this fork is the same as hexops had when they forked [glfw/glfw](https://github.com/glfw/glfw): package @glfw for @ziglang. So:
+* Unnecessary files have been deleted,
+* The build system has been replaced with `build.zig`.
 However this repository has subtle differences for maintainability tasks:
-* no shell scripting,
-* a cron is triggered every day to check [glfw/glfw](https://github.com/glfw/glfw) and to update this repository if a new release is available,
-* no support for macOS.
+* No shell scripting,
+* A cron runs every day to check [glfw/glfw](https://github.com/glfw/glfw). Then it updates this repository if a new release is available,
+* No support for macOS.
 
 You can find the repository version used here:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.versions/glfw)
