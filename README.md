@@ -9,7 +9,8 @@ The intention under this fork is the same as hexops had when they forked [glfw/g
 * the build system has been replaced with `build.zig`.
 However this repository has subtle differences for maintainability tasks:
 * no shell scripting,
-* a cron is triggered every day to check [glfw/glfw](https://github.com/glfw/glfw) and to update this repository if a new release is available.
+* a cron is triggered every day to check [glfw/glfw](https://github.com/glfw/glfw) and to update this repository if a new release is available,
+* no support for macOS.
 
 You can find the repository version used here:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.versions/glfw)
