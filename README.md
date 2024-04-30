@@ -4,7 +4,7 @@ This is a fork of [hexops/glfw](https://github.com/hexops/glfw) which is itself 
 
 ## Why this forkception ?
 
-The intention under this fork is the same as hexops had when they forked [glfw/glfw](https://github.com/glfw/glfw): package the headers for Zig. So:
+The intention under this fork is the same as hexops had when they forked [glfw/glfw](https://github.com/glfw/glfw): package GLFW for Zig. So:
 * unnecessary files have been deleted,
 * the build system has been replaced with `build.zig`.
 However this repository has subtle differences for maintainability tasks:
