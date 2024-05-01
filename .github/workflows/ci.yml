@@ -16,6 +16,7 @@ jobs:
     - uses: tiawl/spaceporn-action-ci@v1.0.0
       with:
         repository: "${{ github.repository }}"
+        additional_zig_opts: '-Dplatform=GLFW -Drenderer=Vulkan'
         sha: "${{ github.sha }}"
         user: "${{ matrix.repo }}.zig"
         token: "${{ github.token }}"
