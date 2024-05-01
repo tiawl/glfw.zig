@@ -12,7 +12,7 @@ However this repository has subtle differences for maintainability tasks:
 * A cron runs every day to check [glfw/glfw](https://github.com/glfw/glfw). Then it updates this repository if a new release is available,
 * No support for macOS.
 
-You can find the repository version used here:
+Here the repositories' version used by this fork:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.versions/glfw)
 
 ## CICD reminder
