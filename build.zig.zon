@@ -3,9 +3,11 @@
     .version = "1.0.0",
     .minimum_zig_version = "0.12.0",
     .paths = .{
+        "README.md",
         "glfw",
         "build.zig.zon",
         "build.zig",
+        "LICENSE.md",
     },
     .dependencies = .{
         .vulkan = .{
