@@ -39,6 +39,7 @@ pub fn build (builder: *std.Build) !void
   const optimize = builder.standardOptimizeOption (.{});
 
   const dependencies = try toolbox.Dependencies.init (builder, "glfw.zig",
+  &.{ "glfw", },
   .{
      .toolbox = .{
        .name = "tiawl/toolbox",
