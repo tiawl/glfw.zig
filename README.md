@@ -12,6 +12,20 @@ However this repository has subtle differences for maintainability tasks:
 * A cron runs every day to check [glfw/glfw][2]. Then it updates this repository if a new release is available,
 * No support for macOS.
 
+## How to use it
+
+The goal of this repository is not to provide a [Zig][3] binding for [glfw/glfw][2]. There are at least as many legit ways as possible to make a binding as there are active accounts on Github. So you are not going to find an answer for this question here. The point of this repository is to abstract the [glfw/glfw][2] compilation process with [Zig][3] (which is not new comers friendly and not easy to maintain) to let you focus on your application. So you can use **glfw.zig**:
+- as raw (see GLFW examples [here](https://github.com/tiawl/cimgui.zig/blob/trunk/examples)),
+- as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2] (see [here][14] for a private usage).
+
+## Important note
+
+The current usage of this repository is centered around [tiawl/cimgui.zig][3] compilation. So for your usage it could break because some files have been filtered in the process. If it happens, open an issue: this repository is open to potential usage evolution.
+
+## Dependencies
+
+The [Zig][3] part of this package is relying on the latest [Zig][3] release (0.12.0) and will only be updated for the next one (so for the 0.13.0).
+
 Here the repositories' version used by this fork:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.versions/glfw)
 
@@ -56,3 +70,4 @@ The unprotected parts of this repository are under MIT License. For everything e
 [11]:https://github.com/tiawl/spaceporn-action-cd-ping
 [12]:https://github.com/tiawl/spaceporn-action-cd-pong
 [13]:https://github.com/hexops
+[14]:https://github.com/tiawl/spaceporn/blob/trunk/src/spaceporn/bindings/glfw/glfw.zig
