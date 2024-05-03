@@ -7,6 +7,7 @@ This is a fork of [hexops/glfw][1] which is itself a fork of [glfw/glfw][2].
 The intention under this fork is the same as [hexops][13] had when they forked [glfw/glfw][2]: package it for [Zig][3]. So:
 * Unnecessary files have been deleted,
 * The build system has been replaced with `build.zig`.
+
 However this repository has subtle differences for maintainability tasks:
 * No shell scripting,
 * A cron runs every day to check [glfw/glfw][2]. Then it updates this repository if a new release is available,
