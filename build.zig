@@ -44,23 +44,28 @@ pub fn build (builder: *std.Build) !void
      .toolbox = .{
        .name = "tiawl/toolbox",
        .host = toolbox.Repository.Host.github,
+       .ref = toolbox.Repository.Reference.tag,
      },
      .vulkan = .{
        .name = "tiawl/vulkan.zig",
        .host = toolbox.Repository.Host.github,
+       .ref = toolbox.Repository.Reference.tag,
      },
      .wayland = .{
        .name = "tiawl/wayland.zig",
        .host = toolbox.Repository.Host.github,
+       .ref = toolbox.Repository.Reference.tag,
      },
      .X11 = .{
        .name = "tiawl/X11.zig",
        .host = toolbox.Repository.Host.github,
+       .ref = toolbox.Repository.Reference.tag,
      },
    }, .{
      .glfw = .{
        .name = "glfw/glfw",
        .host = toolbox.Repository.Host.github,
+       .ref = toolbox.Repository.Reference.tag,
      },
    });
 
