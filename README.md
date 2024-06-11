@@ -25,7 +25,7 @@ The current usage of this repository is centered around [tiawl/cimgui.zig][3] co
 
 ## Dependencies
 
-The [Zig][3] part of this package is relying on the latest [Zig][3] release (0.12.0) and will only be updated for the next one (so for the 0.13.0).
+The [Zig][3] part of this package is relying on the latest [Zig][3] release (0.13.0) and will only be updated for the next one (so for the 0.14.0).
 
 Here the repositories' version used by this fork:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.references/glfw)

@@ -17,7 +17,7 @@ jobs:
       with:
         repository: "${{ github.repository }}"
         additional_zig_opts: '-Dplatform=GLFW -Drenderer=Vulkan'
-        sha: "${{ github.sha }}"
+        sha: "${{ github.event.pull_request.head.sha }}"
         user: "${{ matrix.repo }}.zig"
         token: "${{ github.token }}"
         test_build: 'false'
