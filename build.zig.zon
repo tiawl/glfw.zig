@@ -17,8 +17,8 @@
             .hash = "12201f1054079c650ec2e3b482ec8635577fc461751a884728947b01f8dcf22d5126",
         },
         .X11 = .{
-            .url = "https://github.com/tiawl/X11.zig/archive/d1e873a2cfb97f87acf3874b129dd98f70d41ea4.tar.gz",
-            .hash = "1220a1aa7245ec64b27f07ade64e12e582a1d1f642b0aa81a15eb4e947e362c39c2b",
+            .url = "https://github.com/tiawl/X11.zig/archive/refs/tags/libX11-1.8.9.tar.gz",
+            .hash = "1220a4c095169ae79ad665c88d90388e965ef7533556e619a68dc7254a85a88e8b51",
         },
         .wayland = .{
             .url = "https://github.com/tiawl/wayland.zig/archive/26f8890faea670c34a87a0e0999fa4e2d6073769.tar.gz",
