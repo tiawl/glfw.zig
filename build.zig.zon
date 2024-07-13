@@ -9,8 +9,8 @@
     },
     .dependencies = .{
         .vulkan = .{
-            .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/v1.3.289.tar.gz",
-            .hash = "1220cae505f4a32ee8313f97581e215e737b3cc48fc7208154c75e1cda925241492d",
+            .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/v1.3.290.tar.gz",
+            .hash = "1220450d5b1cc913c75c6158736342ff09031578264693f8fbe4a97be250ee5ed79e",
         },
         .toolbox = .{
             .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.11.0.tar.gz",
