@@ -13,7 +13,7 @@ jobs:
           - cimgui
     runs-on: ubuntu-latest
     steps:
-    - uses: tiawl/spaceporn-action-ci@v1.0.3
+    - uses: tiawl/spaceporn-action-ci@v1.1.0
       with:
         repository: "${{ github.repository }}"
         additional_zig_opts: '-Dplatform=GLFW -Drenderer=Vulkan'
