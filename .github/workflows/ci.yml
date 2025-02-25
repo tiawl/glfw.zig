@@ -5,6 +5,9 @@ on:
     branches:
       - trunk
 
+env:
+  ZIG_VERSION: "0.13.0"
+
 jobs:
   build:
     strategy:
@@ -13,13 +16,70 @@ jobs:
           - cimgui
     runs-on: ubuntu-latest
     steps:
-    - uses: tiawl/spaceporn-action-ci@v1.1.1
+    - name: Setup Zig
+      uses: mlugg/setup-zig@v1
       with:
-        repository: "${{ github.repository }}"
-        additional_zig_opts: '-Dplatform=GLFW -Drenderer=Vulkan'
-        sha: "${{ github.event.pull_request.head.sha }}"
-        user: "${{ matrix.repo }}.zig"
-        token: "${{ github.token }}"
-        test_build: 'false'
-        test_update: 'true'
-        test_fetch: 'true'
+        version: ${{ env.ZIG_VERSION }}
+
+    - name: Install packages
+      env:
+        REPO: "${{ matrix.repo }}"
+      shell: 'bash'
+      run: |
+        case "${REPO}" in
+        ( 'cimgui' ) sudo apt-get install -y python3-venv mesa-utils ;;
+        ( * ) ;;
+        esac
+        printf 'ACTIVATE_DIR=bin\n' >> "${GITHUB_ENV}"
+
+    - uses: actions/checkout@v4
+      with:
+        repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
+
+    - name: Activate python virtual env & install pip packages
+      if: matrix.repo == 'cimgui'
+      env:
+        RUNNER_TMP: "${{ runner.temp }}"
+      shell: 'bash'
+      run: |
+        python3 -m venv "${RUNNER_TMP}/venv"
+        source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
+        pip install ply
+
+    - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
+      env:
+        SHA: "${{ github.event.pull_request.head.sha }}"
+        URL: "${{ github.server_url }}/${{ github.repository }}/archive"
+      shell: 'bash'
+      run: |
+        old_url="$(grep -o "${URL}/.*\.tar\.gz" build.zig.zon)"
+        old_hash="$(zig fetch "${old_url}")"
+        new_url="${URL}/${SHA}.tar.gz"
+        new_hash="$(zig fetch "${new_url}")"
+        sed -i "s@${old_url}@${new_url}@;s@${old_hash}@${new_hash}@" build.zig.zon
+
+    - name: Test updating ${{ matrix.repo }}.zig
+      env:
+        REPO: "${{ matrix.repo }}"
+        RUNNER_TMP: "${{ runner.temp }}"
+      shell: 'bash'
+      run: |
+        case "${REPO}" in
+        ( 'cimgui' )
+          source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
+          zig build -Dupdate -Dplatform=GLFW -Drenderer=Vulkan ;;
+        ( * ) zig build -Dupdate ;;
+        esac
+
+    - name: Test fetching ${{ matrix.repo }}.zig
+      env:
+        REPO: "${{ matrix.repo }}"
+        RUNNER_TMP: "${{ runner.temp }}"
+      shell: 'bash'
+      run: |
+        case "${REPO}" in
+        ( 'cimgui' )
+          source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
+          zig build -Dfetch -Dplatform=GLFW -Drenderer=Vulkan ;;
+        ( * ) zig build -Dfetch ;;
+        esac
