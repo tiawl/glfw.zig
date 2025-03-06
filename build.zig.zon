@@ -1,5 +1,5 @@
 .{
-    .name = "glfw.zig",
+    .name = .glfw_zig,
     .version = "1.0.0",
     .minimum_zig_version = "0.13.0",
     .paths = .{
@@ -25,4 +25,5 @@
             .hash = "12207fba14862dc4349b8052f2017103208f96b4297bcd7393601cb9f788d2d2d37b",
         },
     },
+    .fingerprint = 0xcba456a5a3d8bb36,
 }
