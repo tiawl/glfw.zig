@@ -1,28 +1,28 @@
 .{
     .name = .glfw_zig,
     .version = "1.0.0",
-    .minimum_zig_version = "0.13.0",
+    .minimum_zig_version = "0.14.0",
     .paths = .{
         "build.zig",
         "build.zig.zon",
         "glfw",
     },
     .dependencies = .{
-        .vulkan = .{
-            .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/v1.4.309.tar.gz",
-            .hash = "12201b287a93ca5afb0636a8b1a7c87cea1d96f8708f8038f098db25e9c120b380b2",
-        },
         .toolbox = .{
-            .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.11.2.tar.gz",
-            .hash = "122037046680450473adc3670f08c8695638d05f07c00be18e94ff3f7e21edf9ed9e",
+            .url = "git+https://github.com/tiawl/toolbox#2ae25fc6c2d328f015e3fe54e9b3d93fda3bb1b9",
+            .hash = "toolbox-1.11.2-AAAAAJlKAABQa5LndMD-wEstzxaaUiua615kyH8x8lpp",
+        },
+        .vulkan = .{
+            .url = "git+https://github.com/tiawl/vulkan.zig#0986b3a22990d29568c0b0d3f639f7711d4d02c3",
+            .hash = "vulkan_zig-1.0.0-p2wg3tbCCgG8szWmESKAZgulpAIeq1A1-tv_lkU2tKWf",
         },
         .X11 = .{
-            .url = "https://github.com/tiawl/X11.zig/archive/refs/tags/libX11-1.8.11.tar.gz",
-            .hash = "1220498f0b5d151e3047f78c8c857dbbc85bb8d1c9617f76f6ba74d0f511e26d73d0",
+            .url = "git+https://github.com/tiawl/X11.zig#24fd1361609b1f68b0ab32dccbe7825b73588537",
+            .hash = "X11_zig-1.0.0-UuAzbG_SQgAtbLiIYWcqovqEed2iOrIpR13nU9DpevcB",
         },
         .wayland = .{
-            .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.23.0.tar.gz",
-            .hash = "12207fba14862dc4349b8052f2017103208f96b4297bcd7393601cb9f788d2d2d37b",
+            .url = "git+https://github.com/tiawl/wayland.zig#ffa055e5314f27caf7b1a0c47d789ed7f495e0b6",
+            .hash = "wayland_zig-1.0.0-JmY-j5EhCgBH3szLUdW6MyqWMFu-dDg_vEo4HSTFIYqZ",
         },
     },
     .fingerprint = 0xcba456a5a3d8bb36,
