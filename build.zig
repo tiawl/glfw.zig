@@ -48,17 +48,17 @@ pub fn build(builder: *std.Build) !void {
             .host = toolbox.Repository.Host.github,
             .ref = toolbox.Repository.Reference.commit,
         },
-        .vulkan = .{
+        .vulkan_zig = .{
             .name = "tiawl/vulkan.zig",
             .host = toolbox.Repository.Host.github,
             .ref = toolbox.Repository.Reference.commit,
         },
-        .wayland = .{
+        .wayland_zig = .{
             .name = "tiawl/wayland.zig",
             .host = toolbox.Repository.Host.github,
             .ref = toolbox.Repository.Reference.commit,
         },
-        .X11 = .{
+        .X11_zig = .{
             .name = "tiawl/X11.zig",
             .host = toolbox.Repository.Host.github,
             .ref = toolbox.Repository.Reference.commit,
