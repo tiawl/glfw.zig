@@ -1,28 +1,29 @@
 .{
-    .name = "glfw.zig",
+    .name = .glfw_zig,
     .version = "1.0.0",
-    .minimum_zig_version = "0.13.0",
+    .minimum_zig_version = "0.14.0",
     .paths = .{
         "build.zig",
         "build.zig.zon",
         "glfw",
     },
     .dependencies = .{
-        .vulkan = .{
-            .url = "https://github.com/tiawl/vulkan.zig/archive/refs/tags/v1.4.309.tar.gz",
-            .hash = "12201b287a93ca5afb0636a8b1a7c87cea1d96f8708f8038f098db25e9c120b380b2",
-        },
         .toolbox = .{
-            .url = "https://github.com/tiawl/toolbox/archive/refs/tags/1.11.2.tar.gz",
-            .hash = "122037046680450473adc3670f08c8695638d05f07c00be18e94ff3f7e21edf9ed9e",
+            .url = "git+https://github.com/tiawl/toolbox#a1e559d4af4e6d4992c949654d64c516c2f057fb",
+            .hash = "toolbox-1.11.2-kRAu4NRNAAAmfBT3UgvZQdtwry08DkZ3bQj-P2oFPHNH",
         },
-        .X11 = .{
-            .url = "https://github.com/tiawl/X11.zig/archive/refs/tags/libX11-1.8.11.tar.gz",
-            .hash = "1220498f0b5d151e3047f78c8c857dbbc85bb8d1c9617f76f6ba74d0f511e26d73d0",
+        .vulkan_zig = .{
+            .url = "git+https://github.com/tiawl/vulkan.zig#364ff102ffdcb80cfd6abddd7f34a49bb2fa499f",
+            .hash = "vulkan_zig-1.0.0-p2wg3tbCCgEP2iII204_S0HQ-mt0csIgvPgRzbfvsjTm",
         },
-        .wayland = .{
-            .url = "https://github.com/tiawl/wayland.zig/archive/refs/tags/1.23.0.tar.gz",
-            .hash = "12207fba14862dc4349b8052f2017103208f96b4297bcd7393601cb9f788d2d2d37b",
+        .wayland_zig = .{
+            .url = "git+https://github.com/tiawl/wayland.zig#5aa35c78c1b877032352d58442cd1424db296bbb",
+            .hash = "wayland_zig-1.0.0-JmY-j5EhCgB_z0S66D73RZw_WVk9vH-pStMduxAvOtNr",
+        },
+        .X11_zig = .{
+            .url = "git+https://github.com/tiawl/X11.zig#c4878a8ce89d72fef51ebe7970edfb05404ae9be",
+            .hash = "X11_zig-1.0.0-UuAzbG_SQgDNAYXF2kgEvS4pol9V3QVh6xiqGrkAhx6W",
         },
     },
+    .fingerprint = 0xcba456a5a3d8bb36,
 }

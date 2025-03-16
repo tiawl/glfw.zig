@@ -46,22 +46,22 @@ pub fn build(builder: *std.Build) !void {
         .toolbox = .{
             .name = "tiawl/toolbox",
             .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .ref = toolbox.Repository.Reference.commit,
         },
-        .vulkan = .{
+        .vulkan_zig = .{
             .name = "tiawl/vulkan.zig",
             .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .ref = toolbox.Repository.Reference.commit,
         },
-        .wayland = .{
+        .wayland_zig = .{
             .name = "tiawl/wayland.zig",
             .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .ref = toolbox.Repository.Reference.commit,
         },
-        .X11 = .{
+        .X11_zig = .{
             .name = "tiawl/X11.zig",
             .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .ref = toolbox.Repository.Reference.commit,
         },
     }, .{
         .glfw = .{
@@ -102,7 +102,7 @@ pub fn build(builder: *std.Build) !void {
         ".h",
     });
 
-    const vulkan_dep = builder.dependency("vulkan", .{
+    const vulkan_dep = builder.dependency("vulkan_zig", .{
         .target = target,
         .optimize = optimize,
     });
@@ -145,12 +145,12 @@ pub fn build(builder: *std.Build) !void {
         },
         .macos => return error.MacOSUnsupported,
         else => {
-            const X11_dep = builder.dependency("X11", .{
+            const X11_dep = builder.dependency("X11_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
 
-            const wayland_dep = builder.dependency("wayland", .{
+            const wayland_dep = builder.dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
