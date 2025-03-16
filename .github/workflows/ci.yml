@@ -76,11 +76,15 @@ jobs:
       env:
         REPO: "${{ matrix.repo }}"
         RUNNER_TMP: "${{ runner.temp }}"
+        PR_BODY: "${{ github.event.pull_request.body }}"
       shell: 'bash'
       run: |
+        opts="$(printf '%s' "${PR_BODY}" | sed -n "s/^\[${REPO} fetch opts\] \(.*\)/\1/p")"
+        set -f
         case "${REPO}" in
         ( 'cimgui' )
           source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-          zig build -Dfetch -Dplatform=GLFW -Drenderer=Vulkan ;;
-        ( * ) zig build -Dfetch ;;
+          zig build -Dfetch -Dplatform=GLFW -Drenderer=Vulkan ${opts} ;;
+        ( * ) zig build -Dfetch ${opts} ;;
         esac
+        set +f
