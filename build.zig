@@ -102,7 +102,7 @@ pub fn build(builder: *std.Build) !void {
         ".h",
     });
 
-    const vulkan_dep = builder.dependency("vulkan", .{
+    const vulkan_dep = builder.dependency("vulkan_zig", .{
         .target = target,
         .optimize = optimize,
     });
@@ -145,12 +145,12 @@ pub fn build(builder: *std.Build) !void {
         },
         .macos => return error.MacOSUnsupported,
         else => {
-            const X11_dep = builder.dependency("X11", .{
+            const X11_dep = builder.dependency("X11_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
 
-            const wayland_dep = builder.dependency("wayland", .{
+            const wayland_dep = builder.dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
