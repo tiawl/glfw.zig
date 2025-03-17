@@ -75,6 +75,8 @@ jobs:
       shell: 'bash'
       run: |
         opts="$(printf '%s' "${PR_BODY}" | sed -n "s/^\[${REPO} fetch opts\] \(.*\)/\1/p")"
+        opts="${opts#"${opts%%[![:space:]]*}"}"
+        opts="${opts%"${opts##*[![:space:]]}"}"
         set -f
         case "${REPO}" in
         ( 'cimgui' )
