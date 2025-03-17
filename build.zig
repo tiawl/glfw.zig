@@ -40,7 +40,7 @@ pub fn build(builder: *std.Build) !void {
     const target = builder.standardTargetOptions(.{});
     const optimize = builder.standardOptimizeOption(.{});
 
-    const dependencies = try toolbox.Dependencies.init(builder, "glfw.zig", &.{
+    const dependencies = try toolbox.Dependencies.init(builder, .glfw_zig, "0xcba456a5a3d8bb36", &.{
         "glfw",
     }, .{
         .toolbox = .{
