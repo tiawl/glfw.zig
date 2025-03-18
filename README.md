@@ -4,7 +4,7 @@ This is a fork of [hexops/glfw][1] which is itself a fork of [glfw/glfw][2].
 
 ## Why this forkception ?
 
-The intention under this fork is the same as [hexops][13] had when they forked [glfw/glfw][2]: package it for [Zig][3]. So:
+The intention under this fork is the same as [hexops][9] had when they forked [glfw/glfw][2]: package it for [Zig][3]. So:
 * Unnecessary files have been deleted,
 * The build system has been replaced with `build.zig`.
 
@@ -17,7 +17,7 @@ However this repository has subtle differences for maintainability tasks:
 
 The goal of this repository is not to provide a [Zig][3] binding for [glfw/glfw][2]. There are at least as many legit ways as possible to make a binding as there are active accounts on Github. So you are not going to find an answer for this question here. The point of this repository is to abstract the [glfw/glfw][2] compilation process with [Zig][3] (which is not new comers friendly and not easy to maintain) to let you focus on your application. So you can use **glfw.zig**:
 - as raw (see GLFW examples [here](https://github.com/tiawl/cimgui.zig/blob/trunk/examples)),
-- as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2] (see [here][14] for a private usage).
+- as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2] (see [here][10] for a private usage).
 
 ## Important note
 
@@ -41,10 +41,6 @@ This repository is automatically updated when a new release is available from th
 * [tiawl/vulkan.zig][6]
 * [tiawl/wayland.zig][7]
 * [tiawl/X11.zig][8]
-* [tiawl/spaceporn-action-bot][9]
-* [tiawl/spaceporn-action-ci][10]
-* [tiawl/spaceporn-action-cd-ping][11]
-* [tiawl/spaceporn-action-cd-pong][12]
 
 ## `zig build` options
 
@@ -70,9 +66,5 @@ The parts of this repository originated from this repository are dedicated to th
 [6]:https://github.com/tiawl/vulkan.zig
 [7]:https://github.com/tiawl/wayland.zig
 [8]:https://github.com/tiawl/X11.zig
-[9]:https://github.com/tiawl/spaceporn-action-bot
-[10]:https://github.com/tiawl/spaceporn-action-ci
-[11]:https://github.com/tiawl/spaceporn-action-cd-ping
-[12]:https://github.com/tiawl/spaceporn-action-cd-pong
-[13]:https://github.com/hexops
-[14]:https://github.com/tiawl/spaceporn/blob/trunk/src/spaceporn/bindings/glfw/glfw.zig
+[9]:https://github.com/hexops
+[10]:https://github.com/tiawl/spaceporn/blob/trunk/src/spaceporn/bindings/glfw/glfw.zig
