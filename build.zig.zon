@@ -1,29 +1,29 @@
 .{
     .name = .glfw_zig,
     .version = "1.0.0",
+    .dependencies = .{
+        .toolbox = .{
+            .url = "git+https://github.com/tiawl/toolbox#90a8e16b77a7e4a0e5eef8f80f96c99acf9e6c16",
+            .hash = "toolbox-1.11.2-kRAu4CVLAAC8cC-LITQL_lNOAKx1v9t6VTWfq1Q4uiJR",
+        },
+        .wayland_zig = .{
+            .url = "git+https://github.com/tiawl/wayland.zig#ba7233c5a1e0a730333da3bdcaf6ab18f9e684b0",
+            .hash = "wayland_zig-1.0.0-JmY-j54hCgARsGv7aCq6Pe8sjCXdrJLrEMc-NkVbQj61",
+        },
+        .X11_zig = .{
+            .url = "git+https://github.com/tiawl/X11.zig#af1e030c138eb246e4b51d83852119dcbaa3b22b",
+            .hash = "X11_zig-1.0.0-UuAzbIfSQgCIG3f7iXUomhKDBE6Rse83NnkFa37m_5VJ",
+        },
+        .vulkan_zig = .{
+            .url = "git+https://github.com/tiawl/vulkan.zig#c5985ed6a39a61589cd82ef9b7e5cf7c84883f60",
+            .hash = "vulkan_zig-1.0.0-p2wg3vhCEAHdXFvgejSmw1KxOtRVk3JlRhPz9dbzkCMZ",
+        },
+    },
     .minimum_zig_version = "0.14.0",
+    .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
         "build.zig.zon",
         "glfw",
     },
-    .dependencies = .{
-        .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox#02bb0af6ca24b747ca9de17325e8b422d9b5de2c",
-            .hash = "toolbox-1.11.2-kRAu4CVLAAC8cC-LITQL_lNOAKx1v9t6VTWfq1Q4uiJR",
-        },
-        .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig#44314df0462ee9a27c38fe14f70636f0512b3ab3",
-            .hash = "vulkan_zig-1.0.0-p2wg3vhCEAHdXFvgejSmw1KxOtRVk3JlRhPz9dbzkCMZ",
-        },
-        .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig#f9212080fe32c9a5727cabdb0c152273239d18e8",
-            .hash = "wayland_zig-1.0.0-JmY-j54hCgARsGv7aCq6Pe8sjCXdrJLrEMc-NkVbQj61",
-        },
-        .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig#8497839529a1aac75b6000f319ff1308abbcf01a",
-            .hash = "X11_zig-1.0.0-UuAzbIfSQgCIG3f7iXUomhKDBE6Rse83NnkFa37m_5VJ",
-        },
-    },
-    .fingerprint = 0xcba456a5a3d8bb36,
 }
