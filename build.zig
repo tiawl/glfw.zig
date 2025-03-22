@@ -1,20 +1,19 @@
 const std = @import("std");
 const toolbox = @import("toolbox");
 
-fn update(builder: *std.Build, dependencies: *const toolbox.Dependencies) !void {
-    const glfw_path = try builder.build_root.join(builder.allocator, &.{
+fn update(dependencies: *const toolbox.Dependencies) !void {
+    const glfw_path = try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
         "glfw",
     });
 
-    std.fs.deleteTreeAbsolute(glfw_path) catch |err|
-        {
-            switch (err) {
-                error.FileNotFound => {},
-                else => return err,
-            }
-        };
+    std.fs.deleteTreeAbsolute(glfw_path) catch |err| {
+        switch (err) {
+            error.FileNotFound => {},
+            else => return err,
+        }
+    };
 
-    try dependencies.clone(builder, "glfw", glfw_path);
+    try dependencies.clone("glfw", glfw_path);
 
     var glfw_dir = try std.fs.openDirAbsolute(glfw_path, .{
         .iterate = true,
@@ -23,15 +22,14 @@ fn update(builder: *std.Build, dependencies: *const toolbox.Dependencies) !void 
 
     var it = glfw_dir.iterate();
     while (try it.next()) |*entry| {
-        if (!std.mem.eql(u8, entry.name, "src") and
-            !std.mem.eql(u8, entry.name, "include"))
-            try std.fs.deleteTreeAbsolute(try std.fs.path.join(builder.allocator, &.{
-                glfw_path,
-                entry.name,
+        if (!std.mem.eql(u8, entry.name, "src") and !std.mem.eql(u8, entry.name, "include")) {
+            try std.fs.deleteTreeAbsolute(toolbox.instance().ptrBuilder().pathJoin(&.{
+                glfw_path, entry.name,
             }));
+        }
     }
 
-    try toolbox.clean(builder, &.{
+    try toolbox.instance().clean(&.{
         "glfw",
     }, &.{});
 }
@@ -40,7 +38,9 @@ pub fn build(builder: *std.Build) !void {
     const target = builder.standardTargetOptions(.{});
     const optimize = builder.standardOptimizeOption(.{});
 
-    const dependencies = try toolbox.Dependencies.init(builder, .glfw_zig, "0xcba456a5a3d8bb36", &.{
+    toolbox.init(builder, optimize);
+    defer toolbox.deinit();
+    const dependencies = try toolbox.Dependencies.init(.glfw_zig, "0xcba456a5a3d8bb36", &.{
         "glfw",
     }, .{
         .toolbox = .{
@@ -71,48 +71,48 @@ pub fn build(builder: *std.Build) !void {
         },
     });
 
-    if (builder.option(bool, "update", "Update binding") orelse false)
-        try update(builder, &dependencies);
+    if (toolbox.instance().ptrBuilder().option(bool, "update", "Update binding") orelse false) {
+        try update(&dependencies);
+    }
 
-    const lib = builder.addStaticLibrary(.{
+    const lib = toolbox.instance().ptrBuilder().addStaticLibrary(.{
         .name = "glfw",
-        .root_source_file = builder.addWriteFiles().add("empty.c", ""),
+        .root_source_file = toolbox.instance().ptrBuilder().addWriteFiles().add("empty.c", ""),
         .target = target,
         .optimize = optimize,
     });
 
     lib.linkLibC();
 
-    var root_dir = try builder.build_root.handle.openDir(".", .{
+    var root_dir = try toolbox.instance().getBuilder().build_root.handle.openDir(".", .{
         .iterate = true,
     });
     defer root_dir.close();
 
-    var walk = try root_dir.walk(builder.allocator);
+    var walk = try root_dir.walk(toolbox.instance().getBuilder().allocator);
     while (try walk.next()) |*entry| {
-        if (std.mem.startsWith(u8, entry.path, "glfw") and
-            entry.kind == .directory) toolbox.addInclude(lib, entry.path);
+        if (std.mem.startsWith(u8, entry.path, "glfw") and entry.kind == .directory) {
+            toolbox.instance().addInclude(lib, entry.path);
+        }
     }
 
-    toolbox.addHeader(lib, try builder.build_root.join(builder.allocator, &.{
-        "glfw",
-        "include",
-        "GLFW",
+    toolbox.instance().addHeader(lib, try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
+        "glfw", "include", "GLFW",
     }), "GLFW", &.{
         ".h",
     });
 
-    const vulkan_dep = builder.dependency("vulkan_zig", .{
+    const vulkan_dep = toolbox.instance().ptrBuilder().dependency("vulkan_zig", .{
         .target = target,
         .optimize = optimize,
     });
 
     lib.installLibraryHeaders(vulkan_dep.artifact("vulkan"));
 
-    const src_path = try builder.build_root.join(builder.allocator, &.{
-        "glfw",
-        "src",
+    const src_path = try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
+        "glfw", "src",
     });
+
     var src_dir = try std.fs.openDirAbsolute(src_path, .{
         .iterate = true,
     });
@@ -125,8 +125,7 @@ pub fn build(builder: *std.Build) !void {
             lib.linkSystemLibrary("shell32");
 
             const flags = [_][]const u8{
-                "-D_GLFW_WIN32",
-                "-Isrc",
+                "-D_GLFW_WIN32", "-Isrc",
             };
 
             var it = src_dir.iterate();
@@ -140,17 +139,19 @@ pub fn build(builder: *std.Build) !void {
                     !std.mem.startsWith(u8, entry.name, "nsgl_") and
                     !std.mem.startsWith(u8, entry.name, "wl_")) and
                     toolbox.isCSource(entry.name) and entry.kind == .file)
-                    try toolbox.addSource(lib, src_path, entry.name, &flags);
+                {
+                    try toolbox.instance().addSource(lib, src_path, entry.name, &flags);
+                }
             }
         },
         .macos => return error.MacOSUnsupported,
         else => {
-            const X11_dep = builder.dependency("X11_zig", .{
+            const X11_dep = toolbox.instance().ptrBuilder().dependency("X11_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
 
-            const wayland_dep = builder.dependency("wayland_zig", .{
+            const wayland_dep = toolbox.instance().ptrBuilder().dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
@@ -161,8 +162,7 @@ pub fn build(builder: *std.Build) !void {
             lib.installLibraryHeaders(wayland_dep.artifact("wayland"));
 
             const flags = [_][]const u8{
-                "-D_GLFW_X11",                        "-D_GLFW_WAYLAND",
-                "-Wno-implicit-function-declaration", "-Isrc",
+                "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc",
             };
 
             var it = src_dir.iterate();
@@ -172,12 +172,14 @@ pub fn build(builder: *std.Build) !void {
                     !std.mem.startsWith(u8, entry.name, "cocoa_") and
                     !std.mem.startsWith(u8, entry.name, "nsgl_")) and
                     toolbox.isCSource(entry.name) and entry.kind == .file)
-                    try toolbox.addSource(lib, src_path, entry.name, &flags);
+                {
+                    try toolbox.instance().addSource(lib, src_path, entry.name, &flags);
+                }
             }
 
             lib.root_module.addCMacro("WL_MARSHAL_FLAG_DESTROY", "1");
         },
     }
 
-    builder.installArtifact(lib);
+    toolbox.instance().ptrBuilder().installArtifact(lib);
 }
