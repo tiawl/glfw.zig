@@ -8,11 +8,11 @@ fn update(builder: *std.Build, dependencies: *const toolbox.Dependencies) !void 
 
     std.fs.deleteTreeAbsolute(glfw_path) catch |err|
         {
-        switch (err) {
-            error.FileNotFound => {},
-            else => return err,
-        }
-    };
+            switch (err) {
+                error.FileNotFound => {},
+                else => return err,
+            }
+        };
 
     try dependencies.clone(builder, "glfw", glfw_path);
 
