@@ -35,7 +35,7 @@ fn update() !void {
 }
 
 const FromZon = toolbox.Repositories(.{
-    .toolbox, .vulkan_zig, .wayland_zig, X11_zig.,
+    .toolbox, .vulkan_zig, .wayland_zig, .X11_zig,
 });
 
 const DuringExec = toolbox.Repositories(.{
