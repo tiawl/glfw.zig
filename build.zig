@@ -1,7 +1,7 @@
 const std = @import("std");
 const toolbox = @import("toolbox");
 
-fn update(dependencies: *const toolbox.Dependencies) !void {
+fn update() !void {
     const glfw_path = try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
         "glfw",
     });
@@ -13,7 +13,7 @@ fn update(dependencies: *const toolbox.Dependencies) !void {
         }
     };
 
-    try dependencies.clone("glfw", glfw_path);
+    try toolbox.instance().clone("glfw", glfw_path);
 
     var glfw_dir = try std.fs.openDirAbsolute(glfw_path, .{
         .iterate = true,
@@ -34,44 +34,51 @@ fn update(dependencies: *const toolbox.Dependencies) !void {
     }, &.{});
 }
 
+const FromZon = toolbox.Repositories(.{
+    .toolbox, .vulkan_zig, .wayland_zig, X11_zig.,
+});
+
+const DuringExec = toolbox.Repositories(.{
+    .glfw,
+});
+
 pub fn build(builder: *std.Build) !void {
     const target = builder.standardTargetOptions(.{});
     const optimize = builder.standardOptimizeOption(.{});
 
-    toolbox.init(builder, optimize);
-    defer toolbox.deinit();
-    const dependencies = try toolbox.Dependencies.init(.glfw_zig, "0xcba456a5a3d8bb36", &.{
+    try toolbox.init(FromZon, DuringExec, builder, optimize, .glfw_zig, "0xcba456a5a3d8bb36", &.{
         "glfw",
     }, .{
         .toolbox = .{
             .name = "tiawl/toolbox",
-            .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .host = .github,
+            .ref = .tag,
         },
         .vulkan_zig = .{
             .name = "tiawl/vulkan.zig",
-            .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .host = .github,
+            .ref = .tag,
         },
         .wayland_zig = .{
             .name = "tiawl/wayland.zig",
-            .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .host = .github,
+            .ref = .tag,
         },
         .X11_zig = .{
             .name = "tiawl/X11.zig",
-            .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .host = .github,
+            .ref = .tag,
         },
     }, .{
         .glfw = .{
             .name = "glfw/glfw",
-            .host = toolbox.Repository.Host.github,
-            .ref = toolbox.Repository.Reference.tag,
+            .host = .github,
+            .ref = .tag,
         },
     });
+    defer toolbox.deinit();
 
-    if (toolbox.instance().getUpdate()) try update(&dependencies);
+    if (toolbox.instance().getUpdate()) try update();
 
     const lib = toolbox.instance().ptrBuilder().addStaticLibrary(.{
         .name = "glfw",
