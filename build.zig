@@ -2,7 +2,7 @@ const std = @import("std");
 const toolbox = @import("toolbox");
 
 fn update() !void {
-    const glfw_path = try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
+    const glfw_path = try toolbox.instance().buildRootJoin(&.{
         "glfw",
     });
 
@@ -13,7 +13,7 @@ fn update() !void {
         }
     };
 
-    try toolbox.instance().clone("glfw", glfw_path);
+    try toolbox.instance().clone(.glfw, glfw_path);
 
     var glfw_dir = try std.fs.openDirAbsolute(glfw_path, .{
         .iterate = true,
@@ -23,7 +23,7 @@ fn update() !void {
     var it = glfw_dir.iterate();
     while (try it.next()) |*entry| {
         if (!std.mem.eql(u8, entry.name, "src") and !std.mem.eql(u8, entry.name, "include")) {
-            try std.fs.deleteTreeAbsolute(toolbox.instance().ptrBuilder().pathJoin(&.{
+            try std.fs.deleteTreeAbsolute(toolbox.instance().pathJoin(&.{
                 glfw_path, entry.name,
             }));
         }
@@ -80,41 +80,41 @@ pub fn build(builder: *std.Build) !void {
 
     if (toolbox.instance().getUpdate()) try update();
 
-    const lib = toolbox.instance().ptrBuilder().addStaticLibrary(.{
+    const lib = builder.addStaticLibrary(.{
         .name = "glfw",
-        .root_source_file = toolbox.instance().ptrBuilder().addWriteFiles().add("empty.c", ""),
+        .root_source_file = builder.addWriteFiles().add("empty.c", ""),
         .target = target,
         .optimize = optimize,
     });
 
     lib.linkLibC();
 
-    var root_dir = try toolbox.instance().getBuilder().build_root.handle.openDir(".", .{
+    var root_dir = try builder.build_root.handle.openDir(".", .{
         .iterate = true,
     });
     defer root_dir.close();
 
-    var walk = try root_dir.walk(toolbox.instance().getBuilder().allocator);
+    var walk = try root_dir.walk(builder.allocator);
     while (try walk.next()) |*entry| {
         if (std.mem.startsWith(u8, entry.path, "glfw") and entry.kind == .directory) {
             toolbox.instance().addInclude(lib, entry.path);
         }
     }
 
-    toolbox.instance().addHeader(lib, try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
+    toolbox.instance().addHeader(lib, try builder.build_root.join(builder.allocator, &.{
         "glfw", "include", "GLFW",
     }), "GLFW", &.{
         ".h",
     });
 
-    const vulkan_dep = toolbox.instance().ptrBuilder().dependency("vulkan_zig", .{
+    const vulkan_dep = builder.dependency("vulkan_zig", .{
         .target = target,
         .optimize = optimize,
     });
 
     lib.installLibraryHeaders(vulkan_dep.artifact("vulkan"));
 
-    const src_path = try toolbox.instance().getBuilder().build_root.join(toolbox.instance().getBuilder().allocator, &.{
+    Const src_path = try builder.build_root.join(builder.allocator, &.{
         "glfw", "src",
     });
 
@@ -151,12 +151,12 @@ pub fn build(builder: *std.Build) !void {
         },
         .macos => return error.MacOSUnsupported,
         else => {
-            const X11_dep = toolbox.instance().ptrBuilder().dependency("X11_zig", .{
+            const X11_dep = builder.dependency("X11_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
 
-            const wayland_dep = toolbox.instance().ptrBuilder().dependency("wayland_zig", .{
+            const wayland_dep = builder.dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
@@ -186,5 +186,5 @@ pub fn build(builder: *std.Build) !void {
         },
     }
 
-    toolbox.instance().ptrBuilder().installArtifact(lib);
+    builder.installArtifact(lib);
 }
