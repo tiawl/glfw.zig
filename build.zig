@@ -114,7 +114,7 @@ pub fn build(builder: *std.Build) !void {
 
     lib.installLibraryHeaders(vulkan_dep.artifact("vulkan"));
 
-    Const src_path = try builder.build_root.join(builder.allocator, &.{
+    const src_path = try builder.build_root.join(builder.allocator, &.{
         "glfw", "src",
     });
 
