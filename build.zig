@@ -1,8 +1,9 @@
 const std = @import("std");
-const toolbox = @import("toolbox");
+const toolbox_pkg = @import("toolbox");
+const Toolbox = toolbox_pkg.Toolbox;
 
-fn update() !void {
-    const glfw_path = try toolbox.instance().buildRootJoin(&.{
+fn update(toolbox: *Toolbox) !void {
+    const glfw_path = try toolbox.buildRootJoin(&.{
         "glfw",
     });
 
@@ -13,7 +14,7 @@ fn update() !void {
         }
     };
 
-    try toolbox.instance().clone(.glfw, glfw_path);
+    try toolbox.clone(.glfw, glfw_path);
 
     var glfw_dir = try std.fs.openDirAbsolute(glfw_path, .{
         .iterate = true,
@@ -23,22 +24,22 @@ fn update() !void {
     var it = glfw_dir.iterate();
     while (try it.next()) |*entry| {
         if (!std.mem.eql(u8, entry.name, "src") and !std.mem.eql(u8, entry.name, "include")) {
-            try std.fs.deleteTreeAbsolute(toolbox.instance().pathJoin(&.{
+            try std.fs.deleteTreeAbsolute(toolbox.pathJoin(&.{
                 glfw_path, entry.name,
             }));
         }
     }
 
-    try toolbox.instance().clean(&.{
+    try toolbox.clean(&.{
         "glfw",
     }, &.{});
 }
 
-const FromZon = toolbox.Repositories(.{
+const FromZon = toolbox_pkg.Repositories(.{
     .toolbox, .vulkan_zig, .wayland_zig, .X11_zig,
 });
 
-const DuringExec = toolbox.Repositories(.{
+const DuringExec = toolbox_pkg.Repositories(.{
     .glfw,
 });
 
@@ -46,7 +47,7 @@ pub fn build(builder: *std.Build) !void {
     const target = builder.standardTargetOptions(.{});
     const optimize = builder.standardOptimizeOption(.{});
 
-    try toolbox.init(FromZon, DuringExec, builder, optimize, .glfw_zig, "0xcba456a5a3d8bb36", &.{
+    var toolbox = try Toolbox.init(FromZon, DuringExec, builder, optimize, .glfw_zig, "0xcba456a5a3d8bb36", &.{
         "glfw",
     }, .{
         .toolbox = .{
@@ -78,7 +79,7 @@ pub fn build(builder: *std.Build) !void {
     });
     defer toolbox.deinit();
 
-    if (toolbox.instance().getUpdate()) try update();
+    if (toolbox.getUpdate()) try update(&toolbox);
 
     const lib = builder.addStaticLibrary(.{
         .name = "glfw",
@@ -97,11 +98,11 @@ pub fn build(builder: *std.Build) !void {
     var walk = try root_dir.walk(builder.allocator);
     while (try walk.next()) |*entry| {
         if (std.mem.startsWith(u8, entry.path, "glfw") and entry.kind == .directory) {
-            toolbox.instance().addInclude(lib, entry.path);
+            toolbox.addInclude(lib, entry.path);
         }
     }
 
-    toolbox.instance().addHeader(lib, try builder.build_root.join(builder.allocator, &.{
+    toolbox.addHeader(lib, try builder.build_root.join(builder.allocator, &.{
         "glfw", "include", "GLFW",
     }), "GLFW", &.{
         ".h",
@@ -143,9 +144,9 @@ pub fn build(builder: *std.Build) !void {
                     !std.mem.startsWith(u8, entry.name, "cocoa_") and
                     !std.mem.startsWith(u8, entry.name, "nsgl_") and
                     !std.mem.startsWith(u8, entry.name, "wl_")) and
-                    toolbox.isCSource(entry.name) and entry.kind == .file)
+                    toolbox_pkg.isCSource(entry.name) and entry.kind == .file)
                 {
-                    try toolbox.instance().addSource(lib, src_path, entry.name, &flags);
+                    try toolbox.addSource(lib, src_path, entry.name, &flags);
                 }
             }
         },
@@ -176,9 +177,9 @@ pub fn build(builder: *std.Build) !void {
                     !std.mem.startsWith(u8, entry.name, "win32_") and
                     !std.mem.startsWith(u8, entry.name, "cocoa_") and
                     !std.mem.startsWith(u8, entry.name, "nsgl_")) and
-                    toolbox.isCSource(entry.name) and entry.kind == .file)
+                    toolbox_pkg.isCSource(entry.name) and entry.kind == .file)
                 {
-                    try toolbox.instance().addSource(lib, src_path, entry.name, &flags);
+                    try toolbox.addSource(lib, src_path, entry.name, &flags);
                 }
             }
 
