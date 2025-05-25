@@ -7,8 +7,8 @@
             .hash = "toolbox-1.12.4-kRAu4LdaAAAxx3LD1XE8lhk6ZF1sfmC3Zlh6vkShfGwE",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=1.23.91#ab2fa98a98e84660205c4f877a170d9dc4729f39",
-            .hash = "wayland_zig-1.0.0-JmY-j1A-CgBlGeXd8Tnr5acTghHo3HP0qsC_igi0W5Vh",
+            .url = "git+https://github.com/tiawl/wayland.zig?ref=zig-0.14.1#ce670c15208764fc63a0397d39b5e0daf84f7225",
+            .hash = "wayland_zig-1.0.0-JmY-j1A-CgA77Fi9Va7uZQcMV7PBAps-tWSiII9Hj7ak",
         },
         .X11_zig = .{
             .url = "git+https://github.com/tiawl/X11.zig?ref=zig-0.14.1#14604c5612def74da111b5deca2885432c2fe05e",
