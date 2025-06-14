@@ -7,7 +7,7 @@
             .hash = "toolbox-1.12.4-kRAu4NNaAAAegkCN8l5sQBlsisel3yRGMXHq-z14rRLe",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=1.23.92#77e2c31232348219a0280a9eb3da28a40f214315",
+            .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.45#5aeeddaa7ed52578948748de11642e42c6fd5082",
             .hash = "wayland_zig-1.0.0-JmY-j1A-CgAO4U5t_fMqIZqiEMn5ZqQUzck5cas0Hr0u",
         },
         .X11_zig = .{
