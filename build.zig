@@ -150,7 +150,31 @@ pub fn build(builder: *std.Build) !void {
                 }
             }
         },
-        .macos => return error.MacOSUnsupported,
+        .macos => {
+            lib.linkFramework("Cocoa");
+            lib.linkFramework("CoreFoundation");
+            lib.linkFramework("IOKit");
+
+            const flags = [_][]const u8{
+                "-D_GLFW_COCOA",
+                "-Isrc",
+            };
+
+            var it = src_dir.iterate();
+            while (try it.next()) |*entry| {
+                if ((!std.mem.startsWith(u8, entry.name, "linux_") and
+                    !std.mem.startsWith(u8, entry.name, "xkb_") and
+                    !std.mem.startsWith(u8, entry.name, "glx_") and
+                    !std.mem.startsWith(u8, entry.name, "x11_") and
+                    !std.mem.startsWith(u8, entry.name, "wgl_") and
+                    !std.mem.startsWith(u8, entry.name, "win32_") and
+                    !std.mem.startsWith(u8, entry.name, "wl_")) and
+                    (toolbox_pkg.isCSource(entry.name) or std.mem.endsWith(u8, entry.name, ".m")) and entry.kind == .file)
+                {
+                    try toolbox.addSource(lib, src_path, entry.name, &flags);
+                }
+            }
+        },
         else => {
             const X11_dep = builder.dependency("X11_zig", .{
                 .target = target,
