@@ -31,6 +31,7 @@ jobs:
       run: |
         case "${REPO}" in
         ( 'cimgui' )
+          sudo apt-get update --fix-missing
           sudo apt-get install -y python3-venv mesa-utils
           printf 'ACTIVATE_DIR=bin\n' >> "${GITHUB_ENV}" ;;
         ( * ) ;;
