@@ -3,8 +3,8 @@
     .version = "1.0.0",
     .dependencies = .{
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=1.12.5#e7382fddb79cea4f9a9842bfe35d59c3460c7cf9",
-            .hash = "toolbox-1.12.4-kRAu4NNaAAAegkCN8l5sQBlsisel3yRGMXHq-z14rRLe",
+            .url = "git+https://github.com/tiawl/toolbox?ref=1.12.5#27a3a72581b03bd6aec7b70a45f399c4f4f01982",
+            .hash = "toolbox-1.12.4-kRAu4BJbAACoBAsEnBUPQUHwx-vJdvYVHWXqOdY3oNnd",
         },
         .wayland_zig = .{
             .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.45#5aeeddaa7ed52578948748de11642e42c6fd5082",
@@ -19,7 +19,7 @@
             .hash = "vulkan_zig-1.0.0-p2wg3mORFgGnecDI2SBcppC1jYAESjNezPPlXXPrZiV6",
         },
     },
-    .minimum_zig_version = "0.14.1",
+    .minimum_zig_version = "0.15.1",
     .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
