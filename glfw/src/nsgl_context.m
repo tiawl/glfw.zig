@@ -381,3 +381,4 @@ GLFWAPI id glfwGetNSGLContext(GLFWwindow* handle)
 }
 
 #endif // _GLFW_COCOA
+
