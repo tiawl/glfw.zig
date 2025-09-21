@@ -32,7 +32,9 @@ fn update(toolbox: *Toolbox) !void {
 
     try toolbox.clean(&.{
         "glfw",
-    }, &.{});
+    }, &.{
+        ".m",
+    });
 }
 
 const FromZon = toolbox_pkg.Repositories(.{
@@ -183,6 +185,8 @@ pub fn build(builder: *std.Build) !void {
                 .optimize = optimize,
             });
 
+            for (X11_dep.artifact("X11").root_module.include_dirs.items) |*included| lib.addIncludePath(included.path);
+
             const wayland_dep = builder.dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
@@ -209,7 +213,7 @@ pub fn build(builder: *std.Build) !void {
                 }
             }
 
-            lib.root_module.addCMacro("WL_MARSHAL_FLAG_DESTROY", "1");
+            //lib.root_module.addCMacro("WL_MARSHAL_FLAG_DESTROY", "1");
         },
     }
 

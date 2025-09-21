@@ -20,6 +20,9 @@ jobs:
       matrix:
         repo:
           - cimgui
+        branch:
+          - trunk
+          - docking
     runs-on: ubuntu-latest
     steps:
     - name: Setup Zig
@@ -40,6 +43,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
+        ref: "${{ matrix.branch }}"
 
     - name: Activate python virtual env & install pip packages
       if: matrix.repo == 'cimgui'
