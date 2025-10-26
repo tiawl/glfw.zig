@@ -11,7 +11,6 @@ The intention under this fork is the same as [hexops][9] had when they forked [g
 However this repository has subtle differences for maintainability tasks:
 * No shell scripting,
 * A cron runs every day to check [glfw/glfw][2]. Then it updates this repository if a new release is available,
-* No support for macOS.
 
 ## How to use it
 
