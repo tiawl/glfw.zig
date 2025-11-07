@@ -11,8 +11,8 @@
             .hash = "wayland_zig-1.0.0-JmY-j58-CgCm8e2k4OXero6r99fxEzVXYb5PemjeVBiy",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=xkbcommon-1.12.3#e23c7e8cbb9b17c79c2d43bec61c46277bfdc24e",
-            .hash = "X11_zig-1.0.0-UuAzbPErwABC1ipjd_LjusP3WFdJFcuSNYgzsyLexUAi",
+            .url = "git+https://github.com/tiawl/X11.zig?ref=xkbcommon-1.13.0#4ff2107cdb67d664b3707298b437afb27697cd2f",
+            .hash = "X11_zig-1.0.0-UuAzbK8vwADtWhkBKbPt_zgSJrK86ArnxrsyinDN3Hp7",
         },
         .vulkan_zig = .{
             .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.331#5489af6a42c5009001359edd1afe2e992954dee4",
