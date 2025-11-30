@@ -36,7 +36,7 @@ jobs:
         fi
 
     - name: Setup Zig
-      uses: mlugg/setup-zig@v2
+      uses: mlugg/setup-zig@v2.0.5
     - name: Setup git user information
       env:
         BRANCH: "bot"
