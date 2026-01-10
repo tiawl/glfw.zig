@@ -15,7 +15,8 @@ jobs:
       shell: bash
       run: |
         zig fmt --check .
-  build:
+
+  maintainance:
     strategy:
       matrix:
         repo:
@@ -72,7 +73,8 @@ jobs:
         case "${REPO}" in
         ( 'cimgui' )
           source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-          zig build -Dupdate -Dplatform=GLFW -Drenderer=Vulkan ;;
+          renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
+          source /proc/self/fd/0 <<< "zig build -Dupdate -Dplatforms=GLFW -Drenderers=${renderers}" ;;
         ( * ) zig build -Dupdate ;;
         esac
 
@@ -86,11 +88,57 @@ jobs:
         opts="$(printf '%s' "${PR_BODY}" | sed -n "s/^\[${REPO} fetch opts\] \(.*\)/\1/p")"
         opts="${opts#"${opts%%[![:space:]]*}"}"
         opts="${opts%"${opts##*[![:space:]]}"}"
-        set -f
         case "${REPO}" in
         ( 'cimgui' )
           source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-          zig build -Dfetch -Dplatform=GLFW -Drenderer=Vulkan ${opts} ;;
-        ( * ) zig build -Dfetch ${opts} ;;
+          renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
+          set -f
+          source /proc/self/fd/0 <<< "zig build -Dfetch -Dplatforms=GLFW -Drenderers=${renderers} ${opts}"
+          set +f ;;
+        ( * )
+          set -f
+          zig build -Dfetch ${opts}
+          set +f ;;
         esac
-        set +f
+
+  build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu
+          - windows
+          - macos
+        repo:
+          - cimgui
+        branch:
+          - trunk
+          - docking
+    runs-on: "${{ matrix.os }}-latest"
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
+        ref: "${{ matrix.branch }}"
+
+    - name: Setup Zig
+      uses: mlugg/setup-zig@v2.0.5
+
+    - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
+      env:
+        URL: "git+${{ github.server_url }}/${{ github.repository }}#${{ github.event.pull_request.head.sha }}"
+      shell: 'bash'
+      run: |
+        zig fetch --save "${URL}"
+
+    - name: Test building ${{ matrix.repo }}.zig
+      env:
+        REPO: "${{ matrix.repo }}"
+        RUNNER_TMP: "${{ runner.temp }}"
+      shell: 'bash'
+      run: |
+        case "${REPO}" in
+        ( 'cimgui' )
+          renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
+          eval "zig build -Dplatforms=GLFW -Drenderers=${renderers}" ;;
+        ( * ) zig build ;;
+        esac
