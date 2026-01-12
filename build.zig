@@ -89,6 +89,7 @@ pub fn build(builder: *std.Build) !void {
             .root_source_file = builder.addWriteFiles().add("empty.zig", ""),
             .target = target,
             .optimize = optimize,
+            .sanitize_c = .off,
         }),
     });
 
