@@ -11,7 +11,7 @@
             .hash = "wayland_zig-1.0.0-JmY-j0k_CgBILUhhfEM-RdwZjP8pFOiQvpmoGMm_-uHO",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=xorgproto-2025.1#ad7242012c1511ee97d7e10f8c03bf6d31729416",
+            .url = "git+https://github.com/tiawl/X11.zig?ref=libXext-1.3.7#a7ae948e364a3105ea3157128239c8c818c68352",
             .hash = "X11_zig-1.0.0-UuAzbMxlwADqtBm9hneM2bqQO_Tj0yovhrifMM8OCWOd",
         },
         .vulkan_zig = .{
