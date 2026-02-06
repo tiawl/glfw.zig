@@ -7,26 +7,28 @@ fn update(toolbox: *Toolbox) !void {
         "glfw",
     });
 
-    std.fs.deleteTreeAbsolute(glfw_path) catch |err| {
-        switch (err) {
-            error.FileNotFound => {},
-            else => return err,
-        }
-    };
+    std.debug.assert(std.fs.path.isAbsolute(glfw_path));
+    try std.Io.Dir.deleteTree(.cwd(), toolbox.getIo(), glfw_path);
 
     try toolbox.clone(.glfw, glfw_path);
 
-    var glfw_dir = try std.fs.openDirAbsolute(glfw_path, .{
+    var glfw_dir = try std.Io.Dir.openDirAbsolute(toolbox.getIo(), glfw_path, .{
         .iterate = true,
     });
-    defer glfw_dir.close();
+    defer glfw_dir.close(toolbox.getIo());
 
     var it = glfw_dir.iterate();
-    while (try it.next()) |*entry| {
+    while (try it.next(toolbox.getIo())) |*entry| {
         if (!std.mem.eql(u8, entry.name, "src") and !std.mem.eql(u8, entry.name, "include")) {
-            try std.fs.deleteTreeAbsolute(toolbox.pathJoin(&.{
-                glfw_path, entry.name,
-            }));
+            std.debug.assert(std.fs.path.isAbsolute(toolbox.pathJoin(&.{
+                glfw_path,
+                entry.name,
+            })));
+            try std.Io.Dir.deleteTree(
+                .cwd(),
+                toolbox.getIo(),
+                toolbox.pathJoin(&.{ glfw_path, entry.name }),
+            );
         }
     }
 
@@ -90,18 +92,17 @@ pub fn build(builder: *std.Build) !void {
             .target = target,
             .optimize = optimize,
             .sanitize_c = .off,
+            .link_libc = true,
         }),
     });
 
-    lib.linkLibC();
-
-    var root_dir = try builder.build_root.handle.openDir(".", .{
+    var root_dir = try builder.build_root.handle.openDir(toolbox.getIo(), ".", .{
         .iterate = true,
     });
-    defer root_dir.close();
+    defer root_dir.close(toolbox.getIo());
 
     var walk = try root_dir.walk(builder.allocator);
-    while (try walk.next()) |*entry| {
+    while (try walk.next(toolbox.getIo())) |*entry| {
         if (std.mem.startsWith(u8, entry.path, "glfw") and entry.kind == .directory) {
             toolbox.addInclude(lib, entry.path);
         }
@@ -124,23 +125,23 @@ pub fn build(builder: *std.Build) !void {
         "glfw", "src",
     });
 
-    var src_dir = try std.fs.openDirAbsolute(src_path, .{
+    var src_dir = try std.Io.Dir.openDirAbsolute(toolbox.getIo(), src_path, .{
         .iterate = true,
     });
-    defer src_dir.close();
+    defer src_dir.close(toolbox.getIo());
 
     switch (target.result.os.tag) {
         .windows => {
-            lib.linkSystemLibrary("gdi32");
-            lib.linkSystemLibrary("user32");
-            lib.linkSystemLibrary("shell32");
+            lib.root_module.linkSystemLibrary("gdi32", .{});
+            lib.root_module.linkSystemLibrary("user32", .{});
+            lib.root_module.linkSystemLibrary("shell32", .{});
 
             const flags = [_][]const u8{
                 "-D_GLFW_WIN32", "-Isrc",
             };
 
             var it = src_dir.iterate();
-            while (try it.next()) |*entry| {
+            while (try it.next(toolbox.getIo())) |*entry| {
                 if ((!std.mem.startsWith(u8, entry.name, "linux_") and
                     !std.mem.startsWith(u8, entry.name, "posix_") and
                     !std.mem.startsWith(u8, entry.name, "xkb_") and
@@ -156,9 +157,9 @@ pub fn build(builder: *std.Build) !void {
             }
         },
         .macos => {
-            lib.linkFramework("Cocoa");
-            lib.linkFramework("CoreFoundation");
-            lib.linkFramework("IOKit");
+            lib.root_module.linkFramework("Cocoa", .{});
+            lib.root_module.linkFramework("CoreFoundation", .{});
+            lib.root_module.linkFramework("IOKit", .{});
 
             const flags = [_][]const u8{
                 "-D_GLFW_COCOA",
@@ -166,7 +167,7 @@ pub fn build(builder: *std.Build) !void {
             };
 
             var it = src_dir.iterate();
-            while (try it.next()) |*entry| {
+            while (try it.next(toolbox.getIo())) |*entry| {
                 if ((!std.mem.startsWith(u8, entry.name, "linux_") and
                     !std.mem.startsWith(u8, entry.name, "xkb_") and
                     !std.mem.startsWith(u8, entry.name, "glx_") and
@@ -186,15 +187,15 @@ pub fn build(builder: *std.Build) !void {
                 .optimize = optimize,
             });
 
-            for (X11_dep.artifact("X11").root_module.include_dirs.items) |*included| lib.addIncludePath(included.path);
+            for (X11_dep.artifact("X11").root_module.include_dirs.items) |*included| lib.root_module.addIncludePath(included.path);
 
             const wayland_dep = builder.dependency("wayland_zig", .{
                 .target = target,
                 .optimize = optimize,
             });
 
-            lib.linkLibrary(X11_dep.artifact("X11"));
-            lib.linkLibrary(wayland_dep.artifact("wayland"));
+            lib.root_module.linkLibrary(X11_dep.artifact("X11"));
+            lib.root_module.linkLibrary(wayland_dep.artifact("wayland"));
             lib.installLibraryHeaders(X11_dep.artifact("X11"));
             lib.installLibraryHeaders(wayland_dep.artifact("wayland"));
 
@@ -203,7 +204,7 @@ pub fn build(builder: *std.Build) !void {
             };
 
             var it = src_dir.iterate();
-            while (try it.next()) |*entry| {
+            while (try it.next(toolbox.getIo())) |*entry| {
                 if ((!std.mem.startsWith(u8, entry.name, "wgl_") and
                     !std.mem.startsWith(u8, entry.name, "win32_") and
                     !std.mem.startsWith(u8, entry.name, "cocoa_") and

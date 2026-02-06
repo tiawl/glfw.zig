@@ -1,25 +1,25 @@
 .{
     .name = .glfw_zig,
-    .version = "1.0.0",
+    .version = "1.0.1",
     .dependencies = .{
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=1.12.6#79c1dffe608a9c4a7dcf11f98f1dc88b9b46e9f5",
-            .hash = "toolbox-1.12.6-kRAu4BJbAAAGPWPltdn1vwY83xau2Zh9015JTQ0MZjyM",
+            .url = "git+https://github.com/apm5127/toolbox.git?ref=update-zig#53d8342f24a9213fa6454ab6f15605c6ac35c8ab",
+            .hash = "toolbox-1.12.7-kRAu4DRlAAC0RRGTn0MRUxiv6TKMUAvWqnnXKs2UF3F7",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.47#3d9fd2ccfac8b61344b7becba3a54acb25f26ed5",
-            .hash = "wayland_zig-1.0.0-JmY-j0k_CgBILUhhfEM-RdwZjP8pFOiQvpmoGMm_-uHO",
+            .url = "git+https://github.com/apm5127/wayland.zig.git?ref=update-zig#c8f747fb853db5c41057d6dce67b6fa1c36a6d9a",
+            .hash = "wayland_zig-1.0.1-JmY-j9dACgDHfjaNxoomouAt09rv7p1-2k5gZ-i5ulTG",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=libXext-1.3.7#a7ae948e364a3105ea3157128239c8c818c68352",
-            .hash = "X11_zig-1.0.0-UuAzbMxlwADqtBm9hneM2bqQO_Tj0yovhrifMM8OCWOd",
+            .url = "git+https://github.com/apm5127/x11.zig.git?ref=update-zig#1e0bd4bae2c7c87d68d6f21ce37060c10b2e7064",
+            .hash = "X11_zig-1.0.1-UuAzbDFuwAAZNzJ8Ir1BqCFohjJgWmf5h8IUagPvtl-k",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.342#f494a3d82b7df46e29b2b72e1522b09ad488fa7a",
-            .hash = "vulkan_zig-1.0.0-p2wg3mmyPQHiAxPvc4TQaiC70ZYYYGY1uQqfIdWutmdz",
+            .url = "git+https://github.com/apm5127/vulkan.zig.git?ref=update-zig#ad62a4ff80a72b521a2539b8416d5c76a6ac078f",
+            .hash = "vulkan_zig-1.0.1-p2wg3v-yPQE7XYDBvmsbVfm3XzUPAa4Id9ldL8O2AJmd",
         },
     },
-    .minimum_zig_version = "0.15.1",
+    .minimum_zig_version = "0.16.0",
     .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
