@@ -3,20 +3,28 @@
     .version = "1.0.0",
     .dependencies = .{
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=1.12.6#79c1dffe608a9c4a7dcf11f98f1dc88b9b46e9f5",
-            .hash = "toolbox-1.12.6-kRAu4BJbAAAGPWPltdn1vwY83xau2Zh9015JTQ0MZjyM",
+            .path = "../toolbox",
+            //.url = "git+https://github.com/tiawl/toolbox?ref=1.12.6#79c1dffe608a9c4a7dcf11f98f1dc88b9b46e9f5",
+            //.hash = "toolbox-1.12.6-kRAu4BJbAAAGPWPltdn1vwY83xau2Zh9015JTQ0MZjyM",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.47#3d9fd2ccfac8b61344b7becba3a54acb25f26ed5",
-            .hash = "wayland_zig-1.0.0-JmY-j0k_CgBILUhhfEM-RdwZjP8pFOiQvpmoGMm_-uHO",
+            .path = "../wayland.zig",
+            //.url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.47#3d9fd2ccfac8b61344b7becba3a54acb25f26ed5",
+            //.hash = "wayland_zig-1.0.0-JmY-j0k_CgBILUhhfEM-RdwZjP8pFOiQvpmoGMm_-uHO",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=libX11-1.8.13#c5ee1a49153a89601bce9264ff408f3f21bd72bc",
-            .hash = "X11_zig-1.0.0-UuAzbBwzwABCRm6KhLr5KtzWs52eHEivuyx1LIEBLRtd",
+            .path = "../X11.zig",
+            //.url = "git+https://github.com/tiawl/X11.zig?ref=libX11-1.8.13#c5ee1a49153a89601bce9264ff408f3f21bd72bc",
+            //.hash = "X11_zig-1.0.0-UuAzbBwzwABCRm6KhLr5KtzWs52eHEivuyx1LIEBLRtd",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.343#f66e8c34e270bbb471ee057c5c61d20b22e6593d",
-            .hash = "vulkan_zig-1.0.0-p2wg3qmGPQGYTOSvwMxrYSMrUujPD6tJ1bQillB9oLAH",
+            .path = "../vulkan.zig",
+            //.url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.343#f66e8c34e270bbb471ee057c5c61d20b22e6593d",
+            //.hash = "vulkan_zig-1.0.0-p2wg3qmGPQGYTOSvwMxrYSMrUujPD6tJ1bQillB9oLAH",
+        },
+        .glfw = .{
+            .url = "git+https://github.com/glfw/glfw?ref=3.4#7b6aead9fb88b3623e3b3725ebb42670cbe4c579",
+            .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
         },
     },
     .minimum_zig_version = "0.15.1",
