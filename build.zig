@@ -10,11 +10,11 @@ fn updateFn(pkg_builder: *VerboseBuilder) !void {
     const glfw_dep = pkg_builder.dependency("glfw");
     var glfw_builder = VerboseBuilder.initFromDependency(glfw_dep);
 
-    for ([_][]const u8 {"src", "include"}) |path| {
-        try pkg_builder.make(&.{"glfw", path});
+    for ([_][]const u8{ "src", "include" }) |path| {
+        try pkg_builder.make(&.{ "glfw", path });
         while (try glfw_builder.walk(&.{path})) |*entry| {
             switch (entry.kind) {
-                .file => if (toolbox.isCFile(entry.basename) or toolbox.isObjCSource(entry.basename)) try pkg_builder.copy(&.{ "glfw", path, entry.path }, &glfw_builder, &.{entry.path}),
+                .file => if (toolbox.isCFile(entry.basename) or toolbox.isObjCSource(entry.basename)) try pkg_builder.copy(&.{ "glfw", path, entry.path }, &glfw_builder, &.{ path, entry.path }),
                 .directory => try pkg_builder.make(&.{ "glfw", path, entry.path }),
                 else => {},
             }
@@ -29,7 +29,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
 
     while (try pkg_builder.walk(&.{"glfw"})) |entry| {
         switch (entry.kind) {
-            .directory => pkg_builder.addInclude(lib, &.{"glfw", entry.path}),
+            .directory => pkg_builder.addInclude(lib, &.{ "glfw", entry.path }),
             else => {},
         }
     }
@@ -91,10 +91,10 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             //pkg_builder.linkLibrary(lib, X11_artifact);
             //pkg_builder.linkLibrary(lib, wayland_artifact);
             pkg_builder.addIncludePath(lib, wayland_dep.path("wayland"));
-            pkg_builder.addIncludePath(lib, X11_dep.path("GL"));
-            pkg_builder.addIncludePath(lib, X11_dep.path("X11"));
-            pkg_builder.addIncludePath(lib, X11_dep.path("xcb"));
-            pkg_builder.addIncludePath(lib, X11_dep.path("xkbcommon"));
+            //pkg_builder.addIncludePath(lib, X11_dep.path("GL"));
+            //pkg_builder.addIncludePath(lib, X11_dep.path("X11"));
+            //pkg_builder.addIncludePath(lib, X11_dep.path("xcb"));
+            pkg_builder.addIncludePath(lib, X11_dep.path("."));
             //pkg_builder.installLibraryHeaders(lib, X11_artifact);
             //pkg_builder.installLibraryHeaders(lib, wayland_artifact);
 
