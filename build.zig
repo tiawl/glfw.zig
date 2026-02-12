@@ -7,7 +7,7 @@ fn updateFn(pkg_builder: *VerboseBuilder) !void {
     try pkg_builder.remove(&.{"glfw"});
     try pkg_builder.make(&.{"glfw"});
 
-    const glfw_dep = pkg_builder.dependency("glfw");
+    const glfw_dep = pkg_builder.verboseDependency("glfw");
     var glfw_builder = VerboseBuilder.initFromDependency(glfw_dep);
 
     for ([_][]const u8{ "src", "include" }) |path| {
@@ -27,18 +27,12 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
     pkg_builder.unsanitizeC(lib);
     pkg_builder.linkLibC(lib);
 
-    while (try pkg_builder.walk(&.{"glfw"})) |entry| {
-        switch (entry.kind) {
-            .directory => pkg_builder.addInclude(lib, &.{ "glfw", entry.path }),
-            else => {},
-        }
+    while (try pkg_builder.walk(&.{ "glfw", "include" })) |*entry| {
+        if (toolbox.isCHeader(entry.basename)) pkg_builder.installHeader(lib, &.{"glfw", "include", entry.path }, &.{entry.path});
     }
 
-    pkg_builder.installHeaders(lib, &.{ "glfw", "include", "GLFW" }, "GLFW", &toolbox.ext.c.header);
-
-    const vulkan_dep = pkg_builder.dependency("vulkan_zig");
-    pkg_builder.addIncludePath(lib, vulkan_dep.path("vulkan"));
-    //pkg_builder.installLibraryHeaders(lib, pkg_builder.artifact(vulkan_dep, "vulkan"));
+    const vulkan_dep = pkg_builder.verboseDependency("vulkan_zig");
+    pkg_builder.installLibraryHeaders(lib, pkg_builder.artifact(vulkan_dep, "vulkan"));
 
     switch (pkg_builder.getOs()) {
         .windows => {
@@ -81,22 +75,15 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         else => {
-            const X11_dep = pkg_builder.dependency("X11_zig");
-            const wayland_dep = pkg_builder.dependency("wayland_zig");
+            const X11_dep = pkg_builder.verboseDependency("X11_zig");
+            const wayland_dep = pkg_builder.verboseDependency("wayland_zig");
             const X11_artifact = pkg_builder.artifact(X11_dep, "X11");
-            //const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
+            const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
-            for (X11_artifact.root_module.include_dirs.items) |*included| pkg_builder.addIncludePath(lib, included.path);
-
-            //pkg_builder.linkLibrary(lib, X11_artifact);
-            //pkg_builder.linkLibrary(lib, wayland_artifact);
-            pkg_builder.addIncludePath(lib, wayland_dep.path("wayland"));
-            //pkg_builder.addIncludePath(lib, X11_dep.path("GL"));
-            //pkg_builder.addIncludePath(lib, X11_dep.path("X11"));
-            //pkg_builder.addIncludePath(lib, X11_dep.path("xcb"));
-            pkg_builder.addIncludePath(lib, X11_dep.path("."));
-            //pkg_builder.installLibraryHeaders(lib, X11_artifact);
-            //pkg_builder.installLibraryHeaders(lib, wayland_artifact);
+            pkg_builder.linkLibrary(lib, X11_artifact);
+            pkg_builder.linkLibrary(lib, wayland_artifact);
+            pkg_builder.installLibraryHeaders(lib, X11_artifact);
+            pkg_builder.installLibraryHeaders(lib, wayland_artifact);
 
             while (try pkg_builder.iterate(&.{ "glfw", "src" })) |*entry| {
                 if ((!std.mem.startsWith(u8, entry.name, "wgl_") and
