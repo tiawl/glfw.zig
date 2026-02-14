@@ -16,7 +16,7 @@ However this repository has subtle differences for maintainability tasks:
 
 The goal of this repository is not to provide a [Zig][3] binding for [glfw/glfw][2]. There are at least as many legit ways as possible to make a binding as there are active accounts on Github. So you are not going to find an answer for this question here. The point of this repository is to abstract the [glfw/glfw][2] compilation process with [Zig][3] (which is not new comers friendly and not easy to maintain) to let you focus on your application. So you can use **glfw.zig**:
 - as raw (see GLFW examples [here](https://github.com/tiawl/cimgui.zig/blob/trunk/examples)),
-- as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2] (see [here][10] for a private usage).
+- as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2]
 
 ## Important note
 
@@ -24,7 +24,7 @@ The current usage of this repository is centered around [tiawl/cimgui.zig][3] co
 
 ## Dependencies
 
-The [Zig][3] part of this package is relying on the latest [Zig][3] release (0.15.1) and will only be updated for the next one.
+The [Zig][3] part of this package is relying on the latest [Zig][3] release (0.15.2) and will only be updated for the next one.
 
 Here the repositories' version used by this fork:
 * [glfw/glfw](https://github.com/tiawl/glfw.zig/blob/trunk/.references/glfw)
@@ -66,4 +66,3 @@ The parts of this repository originated from this repository are dedicated to th
 [7]:https://github.com/tiawl/wayland.zig
 [8]:https://github.com/tiawl/X11.zig
 [9]:https://github.com/hexops
-[10]:https://github.com/tiawl/spaceporn/blob/trunk/src/spaceporn/bindings/glfw/glfw.zig
