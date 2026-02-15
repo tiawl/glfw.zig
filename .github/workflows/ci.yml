@@ -28,6 +28,24 @@ jobs:
       run: |
         zig build -Dupdate -Dverbose
 
+  build:
+    strategy:
+      matrix:
+        os:
+          - ubuntu
+          - windows
+          - macos
+    runs-on: "${{ matrix.os }}-latest"
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Zig
+      uses: mlugg/setup-zig@v2
+
+    - name: Test updating
+      shell: 'bash'
+      run: |
+        zig build -Dverbose
+
   user:
     strategy:
       matrix:
