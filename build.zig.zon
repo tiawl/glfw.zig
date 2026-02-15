@@ -15,12 +15,12 @@
             .hash = "vulkan_zig-1.0.0-p2wg3taBPQFFVmGwWu3vMizhARKnPPgF2n4WyLOP6S-V",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig#0ce7aba4c5f9c22be950d0279bf66ddca8488177",
-            .hash = "wayland_zig-1.0.0-JmY-j1E4CgAqxkt351PrWsjFU5tIV58kLQF0YgK1upVj",
+            .url = "git+https://github.com/tiawl/wayland.zig#421fd40bb66eb83af10d5ea93e7a2db80f3a787a",
+            .hash = "wayland_zig-1.0.0-JmY-j1M4CgBJJqu_bxeJjCTGPYETlGwolZZe2T8n68t9",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig#3da20f2dc9f08d8edd94aebd5b360cf7814164c5",
-            .hash = "X11_zig-1.0.0-UuAzbHcKwABnMMGEnlZ0UYYaebOeC6ZqbzbezLE02Oey",
+            .url = "git+https://github.com/tiawl/X11.zig#3f563870c2c55a71998b6a9c0d20bc4f4b9ebb25",
+            .hash = "X11_zig-1.0.0-UuAzbKEKwABQuTE6JAcT1Knmt87Get_PF0HP5uqZCT_s",
         },
     },
     .minimum_zig_version = "0.15.2",

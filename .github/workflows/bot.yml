@@ -50,8 +50,6 @@ jobs:
 
     - name: Fetch
       id: fetch
-      env:
-        RUNNER_TMP: "${{ runner.temp }}"
       shell: bash
       run: |
         zig build -Dfetch -Dverbose
@@ -66,8 +64,6 @@ jobs:
 
     - name: Update
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
-      env:
-        RUNNER_TMP: "${{ runner.temp }}"
       shell: bash
       run: |
         zig build -Dupdate -Dverbose

@@ -37,15 +37,11 @@ jobs:
           - macos
         repo:
           - cimgui
-        branch:
-          - trunk
-          - docking
     runs-on: "${{ matrix.os }}-latest"
     steps:
     - uses: actions/checkout@v4
       with:
         repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
-        ref: "${{ matrix.branch }}"
 
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
@@ -60,7 +56,6 @@ jobs:
     - name: Test building ${{ matrix.repo }}.zig
       env:
         REPO: "${{ matrix.repo }}"
-        RUNNER_TMP: "${{ runner.temp }}"
       shell: 'bash'
       run: |
         case "${REPO}" in
@@ -68,4 +63,14 @@ jobs:
           renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
           eval "zig build -Dverbose -Dplatforms=GLFW -Drenderers=${renderers}" ;;
         ( * ) zig build -Dverbose ;;
+        esac
+
+    - name: Test ${{ matrix.repo }}.zig examples
+      env:
+        REPO: "${{ matrix.repo }}"
+      shell: 'bash'
+      run: |
+        case "${REPO}" in
+        ( 'cimgui' ) env -C ./examples zig build ;;
+        ( * ) ;;
         esac
