@@ -36,7 +36,7 @@ jobs:
         fi
 
     - name: Setup Zig
-      uses: mlugg/setup-zig@v2.0.5
+      uses: mlugg/setup-zig@v2
     - name: Setup git user information
       env:
         BRANCH: "bot"
@@ -50,11 +50,9 @@ jobs:
 
     - name: Fetch
       id: fetch
-      env:
-        RUNNER_TMP: "${{ runner.temp }}"
       shell: bash
       run: |
-        zig build -Dfetch
+        zig build -Dfetch -Dverbose
 
     - name: Diff
       if: steps.fetch.conclusion == 'success'
@@ -66,11 +64,9 @@ jobs:
 
     - name: Update
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
-      env:
-        RUNNER_TMP: "${{ runner.temp }}"
       shell: bash
       run: |
-        zig build -Dupdate
+        zig build -Dupdate -Dverbose
 
     - name: Create Pull Request
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'

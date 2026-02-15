@@ -2,24 +2,28 @@
     .name = .glfw_zig,
     .version = "1.0.0",
     .dependencies = .{
+        .glfw = .{
+            .url = "git+https://github.com/glfw/glfw?ref=3.4#7b6aead9fb88b3623e3b3725ebb42670cbe4c579",
+            .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
+        },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=1.12.6#79c1dffe608a9c4a7dcf11f98f1dc88b9b46e9f5",
-            .hash = "toolbox-1.12.6-kRAu4BJbAAAGPWPltdn1vwY83xau2Zh9015JTQ0MZjyM",
-        },
-        .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.47#3d9fd2ccfac8b61344b7becba3a54acb25f26ed5",
-            .hash = "wayland_zig-1.0.0-JmY-j0k_CgBILUhhfEM-RdwZjP8pFOiQvpmoGMm_-uHO",
-        },
-        .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=libX11-1.8.13#c5ee1a49153a89601bce9264ff408f3f21bd72bc",
-            .hash = "X11_zig-1.0.0-UuAzbBwzwABCRm6KhLr5KtzWs52eHEivuyx1LIEBLRtd",
+            .url = "git+https://github.com/tiawl/toolbox#c84141dcc39d9fe425eea8a837d8bbff76338368",
+            .hash = "toolbox-2.0.0-kRAu4JZ7AAA9Zsu9B4vZk54fDX-r7FPOyq6nqvlCdaGR",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.343#f66e8c34e270bbb471ee057c5c61d20b22e6593d",
-            .hash = "vulkan_zig-1.0.0-p2wg3qmGPQGYTOSvwMxrYSMrUujPD6tJ1bQillB9oLAH",
+            .url = "git+https://github.com/tiawl/vulkan.zig#ddeae6e453100a93b68d42a28ee0b1ef9782114d",
+            .hash = "vulkan_zig-1.0.0-p2wg3taBPQFFVmGwWu3vMizhARKnPPgF2n4WyLOP6S-V",
+        },
+        .wayland_zig = .{
+            .url = "git+https://github.com/tiawl/wayland.zig#421fd40bb66eb83af10d5ea93e7a2db80f3a787a",
+            .hash = "wayland_zig-1.0.0-JmY-j1M4CgBJJqu_bxeJjCTGPYETlGwolZZe2T8n68t9",
+        },
+        .X11_zig = .{
+            .url = "git+https://github.com/tiawl/X11.zig#3f563870c2c55a71998b6a9c0d20bc4f4b9ebb25",
+            .hash = "X11_zig-1.0.0-UuAzbKEKwABQuTE6JAcT1Knmt87Get_PF0HP5uqZCT_s",
         },
     },
-    .minimum_zig_version = "0.15.1",
+    .minimum_zig_version = "0.15.2",
     .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
