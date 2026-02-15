@@ -7,8 +7,8 @@
             .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox#c40e214efcaf902c455dc9ba3dc1ddf64bb3bf25",
-            .hash = "toolbox-2.0.0-kRAu4Cp6AAAOOwydlP8GG2SVXq82AhgeA_C6ABUpDZhH",
+            .url = "git+https://github.com/tiawl/toolbox#c84141dcc39d9fe425eea8a837d8bbff76338368",
+            .hash = "toolbox-2.0.0-kRAu4JZ7AAA9Zsu9B4vZk54fDX-r7FPOyq6nqvlCdaGR",
         },
         .vulkan_zig = .{
             .url = "git+https://github.com/tiawl/vulkan.zig#ddeae6e453100a93b68d42a28ee0b1ef9782114d",

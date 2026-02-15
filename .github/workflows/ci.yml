@@ -17,91 +17,18 @@ jobs:
         zig fmt --check .
 
   maintainance:
-    strategy:
-      matrix:
-        repo:
-          - cimgui
-        branch:
-          - trunk
-          - docking
     runs-on: ubuntu-latest
     steps:
-    - name: Install packages
-      env:
-        REPO: "${{ matrix.repo }}"
-      shell: 'bash'
-      run: |
-        case "${REPO}" in
-        ( 'cimgui' )
-          sudo apt-get update --fix-missing
-          sudo apt-get install -y python3-venv mesa-utils
-          printf 'ACTIVATE_DIR=bin\n' >> "${GITHUB_ENV}" ;;
-        ( * ) ;;
-        esac
-
     - uses: actions/checkout@v4
-      with:
-        repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
-        ref: "${{ matrix.branch }}"
-
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
 
-    - name: Activate python virtual env & install pip packages
-      if: matrix.repo == 'cimgui'
-      env:
-        RUNNER_TMP: "${{ runner.temp }}"
+    - name: Test updating
       shell: 'bash'
       run: |
-        python3 -m venv "${RUNNER_TMP}/venv"
-        source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-        pip install ply
+        zig build -Dupdate -Dverbose
 
-    - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
-      env:
-        URL: "git+${{ github.server_url }}/${{ github.repository }}#${{ github.event.pull_request.head.sha }}"
-      shell: 'bash'
-      run: |
-        zig fetch --save "${URL}"
-
-    - name: Test updating ${{ matrix.repo }}.zig
-      env:
-        REPO: "${{ matrix.repo }}"
-        RUNNER_TMP: "${{ runner.temp }}"
-      shell: 'bash'
-      run: |
-        case "${REPO}" in
-        ( 'cimgui' )
-          source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-          renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
-          source /proc/self/fd/0 <<< "zig build -Dupdate -Dverbose -Dplatforms=GLFW -Drenderers=${renderers}" ;;
-        ( * ) zig build -Dupdate -Dverbose ;;
-        esac
-
-    - name: Test fetching ${{ matrix.repo }}.zig
-      env:
-        REPO: "${{ matrix.repo }}"
-        RUNNER_TMP: "${{ runner.temp }}"
-        PR_BODY: "${{ github.event.pull_request.body }}"
-      shell: 'bash'
-      run: |
-        opts="$(printf '%s' "${PR_BODY}" | sed -n "s/^\[${REPO} fetch opts\] \(.*\)/\1/p")"
-        opts="${opts#"${opts%%[![:space:]]*}"}"
-        opts="${opts%"${opts##*[![:space:]]}"}"
-        case "${REPO}" in
-        ( 'cimgui' )
-          source "${RUNNER_TMP}/venv/${ACTIVATE_DIR:-Scripts}/activate"
-          renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
-          set -f
-          source /proc/self/fd/0 <<< "zig build -Dfetch -Dverbose -Dplatforms=GLFW -Drenderers=${renderers} ${opts}"
-          set +f ;;
-        ( * )
-          set -f
-          zig build -Dfetch -Dverbose ${opts}
-          set +f ;;
-        esac
-
-  build:
+  user:
     strategy:
       matrix:
         os:

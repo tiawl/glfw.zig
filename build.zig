@@ -80,6 +80,14 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
             const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
+            for (x11_artifact.root_module.include_dirs.items) |*included| {
+                switch (included.*) {
+                    .path => pkg_builder.addIncludePath(lib, included.path),
+                    .config_header_step => pkg_builder.addConfigHeaderIntoCompile(lib, included.config_header_step),
+                    else => unreachable,
+                }
+            }
+
             pkg_builder.linkLibrary(lib, x11_artifact);
             pkg_builder.linkLibrary(lib, wayland_artifact);
             pkg_builder.installLibraryHeaders(lib, x11_artifact);
