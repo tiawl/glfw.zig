@@ -3,3 +3,4 @@ Session.vim
 .zig-cache/
 zig-out/
 .DS_Store
+zig-pkg/
