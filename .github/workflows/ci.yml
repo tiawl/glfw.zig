@@ -3,13 +3,13 @@ name: ci
 on:
   pull_request:
     branches:
-      - trunk
+      - zig-stable
 
 jobs:
   linter:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: mlugg/setup-zig@v2
     - name: Check zig is canonical
       shell: bash
@@ -17,9 +17,9 @@ jobs:
         zig fmt --check .
 
   maintainance:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
 
@@ -32,12 +32,12 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu
-          - windows
-          - macos
-    runs-on: "${{ matrix.os }}-latest"
+          - ubuntu-24.04
+          - windows-2025
+          - macos-15
+    runs-on: "${{ matrix.os }}"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
 
@@ -50,14 +50,14 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu
-          - windows
-          - macos
+          - ubuntu-24.04
+          - windows-2025
+          - macos-15
         repo:
           - cimgui
-    runs-on: "${{ matrix.os }}-latest"
+    runs-on: "${{ matrix.os }}"
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       with:
         repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
 
