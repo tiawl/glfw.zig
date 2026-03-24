@@ -23,8 +23,9 @@ jobs:
         EMAIL: "<>"
         NEW_TAG: "${{ github.event.inputs.new-tag }}"
         GH_TOKEN: "${{ github.token }}"
-      shell: bash
+      shell: 'bash'
       run: |
+        set -x
         git config user.name "${NAME}"
         git config user.email "${EMAIL}"
         git tag "${NEW_TAG}"
