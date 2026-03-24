@@ -11,26 +11,34 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+    strategy:
+      matrix:
+        branch:
+          - zig-stable
+          - zig-nightly
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v6
       with:
         repository: "${{ github.repository }}"
+        ref: "${{ matrix.branch }}"
 
     - name: Close every bot PRs
       env:
-        OPTIONS: "--author '@me' --state open --json \"number\""
-        COMMENT: "--comment 'Outdated PR/issue'"
         GH_TOKEN: "${{ github.token }}"
-        FILTER: ".[] | .number"
-      shell: bash
+      shell: 'bash'
       run: |
-        declare -a pr_list=( $(gh pr list ${OPTIONS} | jq "${FILTER}") )
+        set -x
+        declare -a pr_list=( $(gh pr list --author '@me' --state open --json 'number' | jq '.[] | .number') )
         for pr_nr in ${pr_list[@]}
         do
-          gh pr close "${pr_nr}" ${COMMENT} --delete-branch
+          gh pr close "${pr_nr}" --comment 'Outdated PR/issue' --delete-branch
         done
-        if [[ "$(gh pr list ${OPTIONS} | jq length)" != '0' ]]
+    - name: Check bot PRs are all closed
+      shell: 'bash'
+      run: |
+        set -x
+        if [[ "$(gh pr list --author '@me' --state open --json 'number' | jq length)" != '0' ]]
         then
           exit 1
         fi
@@ -39,45 +47,45 @@ jobs:
       uses: mlugg/setup-zig@v2
     - name: Setup git user information
       env:
-        BRANCH: "bot"
+        CHILD_BRANCH: "${{ matrix.branch }}-bot"
         EMAIL: "<>"
         NAME: "GitHub Actions[bot]"
-      shell: bash
+      shell: 'bash'
       run: |
+        set -x
         git config user.name "${NAME}"
         git config user.email "${EMAIL}"
-        git checkout -b "${BRANCH}"
+        git checkout -b "${CHILD_BRANCH}"
 
     - name: Fetch
       id: fetch
-      shell: bash
-      run: |
-        zig build -Dfetch -Dverbose
+      shell: 'bash'
+      run: zig build -Dfetch -Dverbose
 
     - name: Diff
       if: steps.fetch.conclusion == 'success'
       id: diff
-      shell: bash
+      shell: 'bash'
       run: |
+        set -x
         diffs="$(git diff HEAD --name-only | wc -l)"
         printf 'len=%s\n' "${diffs}" >> "${GITHUB_OUTPUT}"
 
     - name: Update
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
-      shell: bash
-      run: |
-        zig build -Dupdate -Dverbose
+      shell: 'bash'
+      run: zig build -Dupdate -Dverbose
 
     - name: Create Pull Request
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
       env:
-        BRANCH: "bot"
-        DEFAULT: "${{ github.event.repository.default_branch }}"
+        CHILD_BRANCH: "${{ matrix.branch }}-bot"
+        PARENT_BRANCH: "${{ matrix.branch }}"
         GH_TOKEN: "${{ github.token }}"
-        TITLE: "Update dependencies"
-      shell: bash
+      shell: 'bash'
       run: |
+        set -x
         git add -A
-        git commit -m "Bot: ${TITLE}"
-        git push --force --set-upstream origin "${BRANCH}"
-        gh pr create --base "${DEFAULT}" --fill --reviewer "${GITHUB_REPOSITORY_OWNER}"
+        git commit -m 'Bot: Update dependencies'
+        git push --force --set-upstream origin "${CHILD_BRANCH}"
+        gh pr create --base "${PARENT_BRANCH}" --fill --reviewer "${GITHUB_REPOSITORY_OWNER}"
