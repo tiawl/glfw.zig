@@ -36,6 +36,8 @@ jobs:
         done
     - name: Check bot PRs are all closed
       shell: 'bash'
+      env:
+        GH_TOKEN: "${{ github.token }}"
       run: |
         set -x
         if [[ "$(gh pr list --author '@me' --state open --json 'number' | jq length)" != '0' ]]
@@ -45,6 +47,8 @@ jobs:
 
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ matrix.branch == 'zig-stable' && 'latest' || 'master' }}"
     - name: Setup git user information
       env:
         CHILD_BRANCH: "${{ matrix.branch }}-bot"

@@ -13,7 +13,10 @@ jobs:
     - uses: actions/checkout@v6
       with:
         ref: "${{ github.event.pull_request.head.ref }}"
-    - uses: mlugg/setup-zig@v2
+    - name: Setup zig
+      uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ github.event.pull_request.base.ref == 'zig-stable' && 'latest' || 'master' }}"
     - name: Check zig is canonical
       shell: 'bash'
       run: zig fmt --check .
@@ -26,6 +29,8 @@ jobs:
         ref: "${{ github.event.pull_request.head.ref }}"
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ github.event.pull_request.base.ref == 'zig-stable' && 'latest' || 'master' }}"
 
     - name: Test updating
       shell: 'bash'
@@ -45,6 +50,8 @@ jobs:
         ref: "${{ github.event.pull_request.head.ref }}"
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ github.event.pull_request.base.ref == 'zig-stable' && 'latest' || 'master' }}"
 
     - name: Test updating
       shell: 'bash'
@@ -67,6 +74,8 @@ jobs:
 
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ github.event.pull_request.base.ref == 'zig-stable' && 'latest' || 'master' }}"
 
     - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
       env:
