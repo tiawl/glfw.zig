@@ -36,6 +36,8 @@ jobs:
         done
     - name: Check bot PRs are all closed
       shell: 'bash'
+      env:
+        GH_TOKEN: "${{ github.token }}"
       run: |
         set -x
         if [[ "$(gh pr list --author '@me' --state open --json 'number' | jq length)" != '0' ]]
