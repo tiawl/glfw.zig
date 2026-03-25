@@ -47,6 +47,8 @@ jobs:
 
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
+      with:
+        version: "${{ matrix.branch == 'zig-stable' && 'latest' || 'master' }}"
     - name: Setup git user information
       env:
         CHILD_BRANCH: "${{ matrix.branch }}-bot"
