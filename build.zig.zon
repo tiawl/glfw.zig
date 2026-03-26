@@ -12,7 +12,7 @@
             .branch = "zig-nightly",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig.git#4682b1fbe796e1e06ee283bcf61799fcaf20dc04",
+            .url = "git+https://github.com/tiawl/vulkan.zig.git#1ad251aa4040c5d7b993d8988b4299b0615a8b60",
             .hash = "vulkan_zig-1.0.1-p2wg3s5GRAEmDp7BDZSaeEvO6WGoLLrzvwWpMgKkW9WF",
             .branch = "zig-nightly",
         },
