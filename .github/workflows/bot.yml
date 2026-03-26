@@ -51,7 +51,7 @@ jobs:
         version: "${{ matrix.branch == 'zig-stable' && 'latest' || 'master' }}"
     - name: Setup git user information
       env:
-        CHILD_BRANCH: "${{ matrix.branch }}-bot"
+        CHILD_BRANCH: "bot/${{ matrix.branch }}"
         EMAIL: "<>"
         NAME: "GitHub Actions[bot]"
       shell: 'bash'
@@ -83,7 +83,7 @@ jobs:
     - name: Create Pull Request
       if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
       env:
-        CHILD_BRANCH: "${{ matrix.branch }}-bot"
+        CHILD_BRANCH: "bot/${{ matrix.branch }}"
         PARENT_BRANCH: "${{ matrix.branch }}"
         GH_TOKEN: "${{ github.token }}"
       shell: 'bash'
