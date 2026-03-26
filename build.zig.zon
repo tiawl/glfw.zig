@@ -9,18 +9,22 @@
         .toolbox = .{
             .url = "git+https://github.com/tiawl/toolbox?ref=2.0.0#8cfe99b13c380c0a0437e9edc05ab4b961b242d6",
             .hash = "toolbox-2.0.0-kRAu4EF8AAC9LKCNAHFDbj1RzTI4yczjgz7PL_9YjYqb",
+            .branch = "zig-stable",
         },
         .vulkan_zig = .{
             .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.347#3524d3611271282400840624c3127ed97079dbae",
             .hash = "vulkan_zig-1.0.0-p2wg3qtGRAGLpNqSpXxl1lF0e_TWCexe9M5rxHOZWBtG",
+            .branch = "zig-stable",
         },
         .wayland_zig = .{
             .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-1.24.91#8411cc68c27f964d446806aaaf976dff4ab31f52",
             .hash = "wayland_zig-1.0.0-JmY-jydTCgD_eTu3kgvCjrnYotc-kFZn9NyRQNddSItn",
+            .branch = "zig-stable",
         },
         .X11_zig = .{
             .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.0.0#73eb80968506dd7fc7fdc6ef53515171b7a294fc",
             .hash = "X11_zig-1.0.0-UuAzbKsKwADkteukor47VtrF2jAzgcPVoGpBm_uhp9Ec",
+            .branch = "zig-stable",
         },
     },
     .minimum_zig_version = "0.15.2",
