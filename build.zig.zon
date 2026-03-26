@@ -12,17 +12,17 @@
             .branch = "zig-nightly",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig.git#4682b1fbe796e1e06ee283bcf61799fcaf20dc04",
+            .url = "git+https://github.com/tiawl/vulkan.zig.git#fac98b3e68d37952ecb848b134936ac04f26fc79",
             .hash = "vulkan_zig-1.0.1-p2wg3s5GRAEmDp7BDZSaeEvO6WGoLLrzvwWpMgKkW9WF",
             .branch = "zig-nightly",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig.git#9399ac49d10d752fe7216250271b78c12644f57a",
+            .url = "git+https://github.com/tiawl/wayland.zig.git#0a58349fe27a023646fe30c68987f048816125ab",
             .hash = "wayland_zig-1.0.1-JmY-j0pTCgAlx_koiYeYzPDsEprIpU7ac9xOoxj1u1hH",
             .branch = "zig-nightly",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig.git#97706360b76a9a574ee32d3836ef7002150e430e",
+            .url = "git+https://github.com/tiawl/X11.zig.git#3872323832e847c3a883f47215e698888f687d27",
             .hash = "X11_zig-1.0.1-UuAzbOMKwAB8--pW5x0yXdeijmTIC-QTBgW1aYL1sMYT",
             .branch = "zig-nightly",
         },
