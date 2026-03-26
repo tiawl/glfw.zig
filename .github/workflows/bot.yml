@@ -64,7 +64,10 @@ jobs:
     - name: Fetch
       id: fetch
       shell: 'bash'
-      run: zig build -Dfetch -Dverbose
+      run: |
+        set -x
+        rm -rf .zig-cache
+        zig build -Dfetch -Dverbose
 
     - name: Diff
       if: steps.fetch.conclusion == 'success'
