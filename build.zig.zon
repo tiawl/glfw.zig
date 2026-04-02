@@ -17,8 +17,8 @@
             .branch = "zig-nightly",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig.git?ref=toolbox-2.0.0-nightly#429edc372b45cfceebe525e383d3dd13e2bd3f40",
-            .hash = "wayland_zig-1.0.1-JmY-j1xTCgBa1am8-zTzBga30sapFQ3xsaL-V-Sl3oCR",
+            .url = "git+https://github.com/tiawl/wayland.zig.git?ref=wayland-protocols-1.48-nightly#c8f9c8e5a8924d2a36dc7109e4b0e374ee9b0e48",
+            .hash = "wayland_zig-1.0.1-JmY-j95WCgAYc_Yk4a74UplogwK7XOuqCHanpipDX0rO",
             .branch = "zig-nightly",
         },
         .X11_zig = .{
