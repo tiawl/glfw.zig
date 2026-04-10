@@ -12,8 +12,8 @@
             .branch = "zig-stable",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.348#62fffe3696344826313828fa700146bd9e8721b7",
-            .hash = "vulkan_zig-1.0.0-p2wg3kWrRQFBQPH66bNMgJh0lv8iHpsQtUiMp8nF_QPO",
+            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.349#6cf6b6bec2577ea30dfc2a6c303be9dcab801375",
+            .hash = "vulkan_zig-1.0.0-p2wg3leLRwGU6k9nlyawhakm034JoUbU1Fy8RiwIqHEd",
             .branch = "zig-stable",
         },
         .wayland_zig = .{
