@@ -66,7 +66,6 @@ jobs:
       shell: 'bash'
       run: |
         set -x
-        rm -rf .zig-cache
         zig build -Dfetch -Dverbose
 
     - name: Diff
