@@ -1,33 +1,29 @@
 .{
     .name = .glfw_zig,
-    .version = "1.0.1",
+    .version = "1.0.0",
     .dependencies = .{
         .glfw = .{
             .url = "git+https://github.com/glfw/glfw?ref=3.4#7b6aead9fb88b3623e3b3725ebb42670cbe4c579",
             .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox#4e53db5c19ca6980fa34d9a7d6df514757381520",
-            .hash = "toolbox-2.0.1-kRAu4DeDAAAuGdsJQqTDrGKN2CyNt9Xrxc8_qateuv50",
-            .branch = "zig-nightly",
+            .url = "git+https://github.com/tiawl/toolbox#d26b12bc2bf6bb0856a591d384cace3fd50445eb",
+            .hash = "toolbox-2.0.1-kRAu4DODAAC4GkZ714OgwurhfE5YXxI3BMQAlecmxa5f",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig#e18e5a9787b985d1ae1cdb9e8aed4e6d2e40a779",
-            .hash = "vulkan_zig-1.0.1-p2wg3lKLRwEtlBJ5P3Fes1XrOcewPiSpbDPKVaEpDGBO",
-            .branch = "zig-nightly",
+            .url = "git+https://github.com/tiawl/vulkan.zig.git#71eba896ef48fd052d6d769182c58d43891258c8",
+            .hash = "vulkan_zig-1.0.0-p2wg3imLRwEG2tD1e6RcVOSiwHtmgAHPlxNZAm1uz96r",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig#6a9ddce83ca429f2a25e6d8d1b5ddfeb3b35f7db",
-            .hash = "wayland_zig-1.0.1-JmY-j8hWCgAA0TUJmFuQXBej2fx0sM5qHb3K43KP_y5u",
-            .branch = "zig-nightly",
+            .url = "git+https://github.com/tiawl/wayland.zig.git#d33645e0159326e52fda77518d2921056820564b",
+            .hash = "wayland_zig-1.0.0-JmY-j59WCgDcQblajrMuWIW29GyjmJQGYfmqL6PsnkdW",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig#7aa53b3f15d04090512490d91f94997214ec854d",
-            .hash = "X11_zig-1.0.1-UuAzbN8KwABtswScKgzRGT_q2NTFoN2fCqFCR8b9rBZG",
-            .branch = "zig-nightly",
+            .url = "git+https://github.com/tiawl/X11.zig.git#fb034ddce9d8408ae6c5d48756dd9c08360ea84a",
+            .hash = "X11_zig-1.0.0-UuAzbLYKwADCzwLQHtxEOrUTixw6WDWIkYpVN5K82Bdv",
         },
     },
-    .minimum_zig_version = "0.16.0-dev",
+    .minimum_zig_version = "0.16.0",
     .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
