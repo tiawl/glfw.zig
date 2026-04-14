@@ -34,9 +34,7 @@ jobs:
 
     - name: Test updating
       shell: 'bash'
-      run: |
-        set -x
-        zig build -Dupdate -Dverbose
+      run: zig build -Dupdate -Dverbose
 
   build:
     strategy:
@@ -57,9 +55,7 @@ jobs:
 
     - name: Test updating
       shell: 'bash'
-      run: |
-        set -x
-        zig build -Dverbose
+      run: zig build -Dverbose
 
   user:
     strategy:
