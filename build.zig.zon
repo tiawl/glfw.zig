@@ -7,22 +7,22 @@
             .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox#4e53db5c19ca6980fa34d9a7d6df514757381520",
+            .url = "git+https://github.com/tiawl/toolbox#77eed4c48c2d0590f618854a1ea2723db7564e50",
             .hash = "toolbox-2.0.1-kRAu4DeDAAAuGdsJQqTDrGKN2CyNt9Xrxc8_qateuv50",
             .branch = "zig-nightly",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig#e18e5a9787b985d1ae1cdb9e8aed4e6d2e40a779",
+            .url = "git+https://github.com/tiawl/vulkan.zig#ce3d453f07ef7b78330e3e375ecce381a2c697be",
             .hash = "vulkan_zig-1.0.1-p2wg3lKLRwEtlBJ5P3Fes1XrOcewPiSpbDPKVaEpDGBO",
             .branch = "zig-nightly",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig#6a9ddce83ca429f2a25e6d8d1b5ddfeb3b35f7db",
+            .url = "git+https://github.com/tiawl/wayland.zig#bbf36d039ec9198c606ca6d23a9b667144ced594",
             .hash = "wayland_zig-1.0.1-JmY-j8hWCgAA0TUJmFuQXBej2fx0sM5qHb3K43KP_y5u",
             .branch = "zig-nightly",
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig#7aa53b3f15d04090512490d91f94997214ec854d",
+            .url = "git+https://github.com/tiawl/X11.zig#4c43b38c9c2fd45ea342244942627c36d85836c2",
             .hash = "X11_zig-1.0.1-UuAzbN8KwABtswScKgzRGT_q2NTFoN2fCqFCR8b9rBZG",
             .branch = "zig-nightly",
         },
