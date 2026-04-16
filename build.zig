@@ -81,13 +81,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
             for ([_]*std.Build.Step.Compile{ x11_artifact, wayland_artifact }) |artifact| {
-                for (artifact.root_module.include_dirs.items) |*included| {
-                    switch (included.*) {
-                        .path => pkg_builder.addIncludePath(lib, included.path),
-                        .config_header_step => pkg_builder.addConfigHeaderIntoCompile(lib, included.config_header_step),
-                        else => unreachable,
-                    }
-                }
+                pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, artifact);
                 pkg_builder.linkLibrary(lib, artifact);
                 pkg_builder.installLibraryHeaders(lib, artifact);
             }
@@ -105,6 +99,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
         },
     }
 
+    pkg_builder.addInclude(lib, &.{ "glfw", "include" });
     pkg_builder.installArtifact(lib);
 }
 
