@@ -11,6 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
+        repository: "${{ github.event.pull_request.head.repo.full_name }}"
         ref: "${{ github.event.pull_request.head.ref }}"
     - name: Setup zig
       uses: mlugg/setup-zig@v2
@@ -25,6 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
+        repository: "${{ github.event.pull_request.head.repo.full_name }}"
         ref: "${{ github.event.pull_request.head.ref }}"
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
@@ -46,6 +48,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
+        repository: "${{ github.event.pull_request.head.repo.full_name }}"
         ref: "${{ github.event.pull_request.head.ref }}"
     - name: Setup Zig
       uses: mlugg/setup-zig@v2
@@ -79,7 +82,7 @@ jobs:
 
     - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
       env:
-        URL: "git+${{ github.server_url }}/${{ github.repository }}#${{ github.event.pull_request.head.sha }}"
+        URL: "git+${{ github.server_url }}/${{ github.event.pull_request.head.repo.full_name }}#${{ github.event.pull_request.head.sha }}"
       shell: 'bash'
       run: zig fetch --save "${URL}"
 
