@@ -15,14 +15,14 @@ However this repository has subtle differences for maintainability tasks:
 ## How to use it
 
 The goal of this repository is not to provide a [Zig][3] binding for [glfw/glfw][2]. The point of this repository is to abstract the [glfw/glfw][2] compilation process with [Zig][3] (which is not easy to maintain) to let you focus on your application. So you can use **glfw.zig**:
-- as raw (see GLFW examples [here](https://github.com/tiawl/cimgui.zig/blob/zig-stable/examples)),
+- as raw (see GLFW examples [here](https://github.com/tiawl/cimgui.zig/blob/stable/examples)),
 - as a daily updated interface for your [Zig][3] binding of [glfw/glfw][2]
 
 ## Dependencies
 
 The [Zig][3] part of this package requires the latest (0.16.0) or the master (0.17.0-dev) [Zig][3] release.
 
-For other dependencies see [the build.zig.zon](https://github.com/tiawl/glfw.zig/blob/zig-stable/build.zig.zon)
+For other dependencies see [the build.zig.zon](https://github.com/tiawl/glfw.zig/blob/stable/build.zig.zon)
 
 ## `zig build` options
 
