@@ -18,11 +18,17 @@ jobs:
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
+      - id: lastcommit
+        shell: 'bash'
+        run: |
+          set -x
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
       - name: Setup zig
         uses: mlugg/setup-zig@v2
         with:
           version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}"
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
       - name: Check zig is canonical
         shell: 'bash'
         run: zig fmt --check .
@@ -39,11 +45,17 @@ jobs:
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
+      - id: lastcommit
+        shell: 'bash'
+        run: |
+          set -x
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
           version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}"
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Test updating
         shell: 'bash'
@@ -65,11 +77,17 @@ jobs:
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
+      - id: lastcommit
+        shell: 'bash'
+        run: |
+          set -x
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
           version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}"
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Test updating
         shell: 'bash'
@@ -98,11 +116,17 @@ jobs:
           repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
           ref: "${{ github.event.pull_request.base.ref }}"
 
+      - id: lastcommit
+        shell: 'bash'
+        run: |
+          set -x
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
           version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}"
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
         env:
