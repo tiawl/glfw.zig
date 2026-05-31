@@ -142,8 +142,9 @@ jobs:
           set -x
           case "${REPO}" in
           ( 'cimgui' )
-            renderers="{$(zig build -Dlist-renderers -Dseparator=,)}"
-            eval "zig build -Dverbose -Dplatforms=GLFW -Drenderers=${renderers}" ;;
+            renderers="$(zig build -Dlist-renderers -Dseparator=,)"
+            renderers="${renderers:+"-Drenderers={${renderers}}"}"
+            eval "zig build -Dverbose -Dplatforms=GLFW ${renderers}" ;;
           ( * ) zig build -Dverbose ;;
           esac
 
