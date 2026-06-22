@@ -75,8 +75,8 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         else => {
-            const x11_dep = pkg_builder.verboseDependency("X11_zig");
-            const wayland_dep = pkg_builder.verboseDependency("wayland_zig");
+            const x11_dep = pkg_builder.verboseLazyDependency("X11_zig").?;
+            const wayland_dep = pkg_builder.verboseLazyDependency("wayland_zig").?;
             const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
             const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
