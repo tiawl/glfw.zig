@@ -11,8 +11,8 @@
             .hash = "toolbox-2.0.2-kRAu4CWwAADgBihQXju-faeZgFKmbmtwgdO25VKfJRDx",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=toolbox-2.2.0#806f8bc43067b4e7ff0aa868507fb13a90f77987",
-            .hash = "wayland_zig-1.0.0-JmY-j4xYCgAzkvBUp13VfNWGWxZqOtAsLkReKbxEI-UY",
+            .url = "git+https://github.com/tiawl/wayland.zig?ref=1.25.91#8f8f7f2bd0a97de4a1fa3e86296d43d57f041ba9",
+            .hash = "wayland_zig-1.0.0-JmY-j591CgDAJxj8hUQN02I0KVogSM_GB1X-XcAAvzSS",
         },
         .X11_zig = .{
             .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.2.0#e8956c4ff3806c8bc2e430d194c0d87d1707995f",
