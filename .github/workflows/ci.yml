@@ -100,7 +100,6 @@ jobs:
     strategy:
       matrix:
         zig-version:
-          - latest
           - master
         os:
           - ubuntu-24.04
