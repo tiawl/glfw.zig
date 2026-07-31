@@ -19,8 +19,8 @@
             .hash = "X11_zig-1.0.0-UuAzbAFbwQDqZQPFbsOcBKcDHaZidM313jWZ39XLLuCB",
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.357#09b8eac493e387fbaf7101c2e45f03044646d89d",
-            .hash = "vulkan_zig-1.0.0-p2wg3ujagQG2IYljtDu8iXNZSLCWJCuruMrUsJj7yUpe",
+            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.358#5748c4fcd3e87925fd82d54c04bc2de6a05ea35d",
+            .hash = "vulkan_zig-1.0.0-p2wg3owIgwG-Pnk8niuSXpW4fIF9RIH-hRs3DF1UnYOE",
         },
     },
     .minimum_zig_version = "0.16.0",
