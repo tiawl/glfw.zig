@@ -3,8 +3,8 @@
     .version = "1.0.0",
     .dependencies = .{
         .glfw = .{
-            .url = "git+https://github.com/glfw/glfw?ref=3.4#7b6aead9fb88b3623e3b3725ebb42670cbe4c579",
-            .hash = "N-V-__8AAKE_TAAJO1RHyQ6MPZFPLLCAyHNu7iYXh7n1KEfH",
+            .url = "git+https://github.com/glfw/glfw?ref=3.5.1#d9d6f0f1f967807ffade6598ea9a631ebaf37a56",
+            .hash = "N-V-__8AACdFSgBQD7teB9tbCMkV6CbZOAg67Mu3sMAakG0G",
         },
         .toolbox = .{
             .url = "git+https://github.com/tiawl/toolbox?ref=2.2.1#9500ec195e63ef225dc3e7ee8d9362fe6601e684",

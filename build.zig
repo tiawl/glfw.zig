@@ -59,6 +59,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             pkg_builder.linkFramework(lib, "Cocoa");
             pkg_builder.linkFramework(lib, "CoreFoundation");
             pkg_builder.linkFramework(lib, "IOKit");
+            pkg_builder.linkFramework(lib, "QuartzCore");
 
             while (try pkg_builder.iterate(&.{ "glfw", "src" })) |*entry| {
                 if ((!std.mem.startsWith(u8, entry.name, "linux_") and
