@@ -76,25 +76,27 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         else => {
-            const x11_dep = pkg_builder.verboseLazyDependency("X11_zig").?;
-            const wayland_dep = pkg_builder.verboseLazyDependency("wayland_zig").?;
-            const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
-            const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
+            if (pkg_builder.verboseDependencyLazy("X11_zig")) |x11_dep| {
+                if (pkg_builder.verboseDependencyLazy("wayland_zig")) |wayland_dep| {
+                    const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
+                    const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
-            for ([_]*std.Build.Step.Compile{ x11_artifact, wayland_artifact }) |artifact| {
-                pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, artifact);
-                pkg_builder.linkLibrary(lib, artifact);
-                pkg_builder.installLibraryHeaders(lib, artifact);
-            }
+                    for ([_]*std.Build.Step.Compile{ x11_artifact, wayland_artifact }) |artifact| {
+                        pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, artifact);
+                        pkg_builder.linkLibrary(lib, artifact);
+                        pkg_builder.installLibraryHeaders(lib, artifact);
+                    }
 
-            while (try pkg_builder.iterate(&.{ "glfw", "src" })) |*entry| {
-                if ((!std.mem.startsWith(u8, entry.name, "wgl_") and
-                    !std.mem.startsWith(u8, entry.name, "win32_") and
-                    !std.mem.startsWith(u8, entry.name, "cocoa_") and
-                    !std.mem.startsWith(u8, entry.name, "nsgl_")) and
-                    toolbox.isCSource(entry.name) and entry.kind == .file)
-                {
-                    pkg_builder.addCSource(lib, &.{ "glfw", "src", entry.name }, &.{ "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc" });
+                    while (try pkg_builder.iterate(&.{ "glfw", "src" })) |*entry| {
+                        if ((!std.mem.startsWith(u8, entry.name, "wgl_") and
+                            !std.mem.startsWith(u8, entry.name, "win32_") and
+                            !std.mem.startsWith(u8, entry.name, "cocoa_") and
+                            !std.mem.startsWith(u8, entry.name, "nsgl_")) and
+                            toolbox.isCSource(entry.name) and entry.kind == .file)
+                        {
+                            pkg_builder.addCSource(lib, &.{ "glfw", "src", entry.name }, &.{ "-D_GLFW_X11", "-D_GLFW_WAYLAND", "-Wno-implicit-function-declaration", "-Isrc" });
+                        }
+                    }
                 }
             }
         },

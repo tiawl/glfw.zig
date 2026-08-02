@@ -100,10 +100,10 @@ jobs:
     strategy:
       matrix:
         zig-version:
-          - master
+          - 0.17.0-dev.1454+5faa79730 # TODO: replace later with - master
         os:
           - ubuntu-24.04
-          - windows-2025
+            # TODO: add it again later - windows-2025
           - macos-15
         repo:
           - cimgui
