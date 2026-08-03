@@ -100,13 +100,21 @@ jobs:
     strategy:
       matrix:
         zig-version:
-          - 0.17.0-dev.1454+5faa79730 # TODO: replace later with - master
+          - latest
+          - master
         os:
           - ubuntu-24.04
-            # TODO: add it again later - windows-2025
+          - windows-2025
           - macos-15
         repo:
           - cimgui
+        exclude:
+          # TODO: remove this exclude after Zig 0.17.0
+          - zig-version: latest
+            repo: cimgui
+          # TODO: fail unexpectedly with an "Out of memory" error
+          - os: windows-2025
+            repo: cimgui
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v6
