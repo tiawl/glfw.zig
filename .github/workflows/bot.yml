@@ -19,7 +19,7 @@ jobs:
           version: 'master'
       - name: Build
         shell: 'bash'
-        run: zig build
+        run: zig build -freference-trace
   update:
     permissions:
       contents: write
@@ -75,7 +75,7 @@ jobs:
         shell: 'bash'
         run: |
           set -x
-          zig build -Dfetch -Dverbose
+          zig build -Dfetch -Dverbose -freference-trace
 
       - name: Diff
         if: steps.fetch.conclusion == 'success'
@@ -89,7 +89,7 @@ jobs:
       - name: Update
         if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
         shell: 'bash'
-        run: zig build -Dupdate -Dverbose
+        run: zig build -Dupdate -Dverbose -freference-trace
 
       - name: Create Pull Request
         if: steps.fetch.conclusion == 'success' && steps.diff.outputs.len != '0'
