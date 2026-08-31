@@ -62,7 +62,7 @@ jobs:
 
       - name: Test updating
         shell: 'bash'
-        run: zig build -Dupdate -Dverbose -freference-trace
+        run: zig build -Dupdate -Dverbose -freference-trace --verbose
 
   build:
     strategy:
@@ -94,7 +94,7 @@ jobs:
 
       - name: Test updating
         shell: 'bash'
-        run: zig build -Dverbose -freference-trace
+        run: zig build -Dverbose -freference-trace --verbose
 
   user:
     strategy:
@@ -148,10 +148,10 @@ jobs:
           set -x
           case "${REPO}" in
           ( 'cimgui' )
-            renderers="$(zig build -Dlist-renderers -Dseparator=, -freference-trace)"
+            renderers="$(zig build -Dlist-renderers -Dseparator=, -freference-trace --verbose)"
             renderers="${renderers:+"-Drenderers={${renderers}}"}"
-            eval "zig build -Dverbose -Dplatforms=GLFW ${renderers} -freference-trace" ;;
-          ( * ) zig build -Dverbose -freference-trace ;;
+            eval "zig build -Dverbose -Dplatforms=GLFW ${renderers} -freference-trace --verbose" ;;
+          ( * ) zig build -Dverbose -freference-trace --verbose ;;
           esac
 
       - name: Test ${{ matrix.repo }}.zig examples
@@ -161,6 +161,6 @@ jobs:
         run: |
           set -x
           case "${REPO}" in
-          ( 'cimgui' ) env -C ./examples zig build -freference-trace ;;
+          ( 'cimgui' ) env -C ./examples zig build -freference-trace --verbose ;;
           ( * ) ;;
           esac
