@@ -150,7 +150,7 @@ jobs:
           ( 'cimgui' )
             renderers="$(zig build -Dlist-renderers -Dseparator=, -freference-trace --verbose)"
             renderers="${renderers:+"-Drenderers={${renderers}}"}"
-            eval "zig build -Dverbose -Dplatforms=GLFW ${renderers} -freference-trace --verbose" ;;
+            eval "zig build -Dverbose -Dplatforms=glfw ${renderers} -freference-trace --verbose" ;;
           ( * ) zig build -Dverbose -freference-trace --verbose ;;
           esac
 
