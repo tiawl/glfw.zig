@@ -21,8 +21,8 @@
             .lazy = true,
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.363#d0f921909a8da5b79fca6979a5af1617d66a534d",
-            .hash = "vulkan_zig-1.0.0-p2wg3jkEjwHbsEEK20qm3hOpuljYOG_ksJPiW5mKG9d6",
+            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.364#af116e71e4b9de1e21d3da7a48828c85952c259c",
+            .hash = "vulkan_zig-1.0.0-p2wg3hV3jwHUub0etT_nji1JpvsJMz6CLJ_XWxi7eWGK",
         },
     },
     .minimum_zig_version = "0.16.0",
