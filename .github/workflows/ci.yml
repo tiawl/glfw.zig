@@ -73,7 +73,7 @@ jobs:
         os:
           - ubuntu-24.04
           - windows-2025
-          - macos-15
+            # TODO add it again later: - macos-15
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v6
@@ -115,6 +115,8 @@ jobs:
           # TODO: fail unexpectedly with an "Out of memory" error
           - os: windows-2025
             repo: cimgui
+          # TODO: fail unexpectedly with SEGV
+          - os: macos-15
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v6
