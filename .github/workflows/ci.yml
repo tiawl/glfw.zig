@@ -109,9 +109,6 @@ jobs:
         repo:
           - cimgui
         exclude:
-          # TODO: remove this exclude after Zig 0.17.0
-          - zig-version: latest
-            repo: cimgui
           # TODO: fail unexpectedly with an "Out of memory" error
           - os: windows-2025
             repo: cimgui
