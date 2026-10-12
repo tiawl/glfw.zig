@@ -7,8 +7,8 @@
             .hash = "N-V-__8AACdFSgBQD7teB9tbCMkV6CbZOAg67Mu3sMAakG0G",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=2.2.5#8a97389edb41c10d3815dc386df30bca9ad2a6c0",
-            .hash = "toolbox-2.2.5-kRAu4EKYAADeYTD8cLQEiC3SUuTDaZUhI9jdU8SUNecU",
+            .url = "git+https://github.com/PaNDa2code/toolbox#f8df579fd57d59f13fd60a264044f4ebc274205d",
+            .hash = "toolbox-2.2.5-kRAu4PWZAADMamXpR2eZFfuJv82cu9fXZ5uXLnXTMvT8",
         },
         .wayland_zig = .{
             .url = "git+https://github.com/tiawl/wayland.zig?ref=toolbox-2.2.5#712099ab3a6b31bbe50888a3390634bcae018487",
@@ -16,8 +16,8 @@
             .lazy = true,
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.2.5#6d821c2c60b7fdc63a4a9ad89e89575bd11a41f5",
-            .hash = "X11_zig-1.0.0-UuAzbHfywQD8TD9nrUtd9tq0_GGNEkq3bKBn9P-tNLMm",
+            .url = "git+https://github.com/PaNDa2code/X11.zig#465a6cb72ac5a758eb5cb20e78ab45ba66ff8a7e",
+            .hash = "X11_zig-1.0.0-UuAzbHbywQAdDpKg7ESQ5vCb8nPtajF-5wl2Fccdn58L",
             .lazy = true,
         },
         .vulkan_zig = .{
