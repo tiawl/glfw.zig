@@ -7,7 +7,7 @@ fn updateFn(pkg_builder: *VerboseBuilder) !void {
     try pkg_builder.remove(&.{"glfw"});
     try pkg_builder.make(&.{"glfw"});
 
-    const glfw_dep = pkg_builder.verboseDependency("glfw");
+    const glfw_dep = pkg_builder.verboseDependency("glfw", pkg_builder.getOptimize(), pkg_builder.getTarget());
     var glfw_builder = VerboseBuilder.initFromDependency(glfw_dep);
 
     for ([_][]const u8{ "src", "include" }) |path| {
@@ -23,7 +23,7 @@ fn updateFn(pkg_builder: *VerboseBuilder) !void {
 }
 
 fn buildFn(pkg_builder: *VerboseBuilder) !void {
-    const lib = pkg_builder.addLibrary("glfw");
+    const lib = pkg_builder.addLibrary("glfw", pkg_builder.getOptimize(), pkg_builder.getTarget());
     pkg_builder.unsanitizeC(lib);
     pkg_builder.linkLibC(lib);
 
@@ -31,7 +31,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
         if (toolbox.isCHeader(entry.basename)) pkg_builder.installHeader(lib, &.{ "glfw", "include", entry.path }, &.{entry.path});
     }
 
-    const vulkan_dep = pkg_builder.verboseDependency("vulkan_zig");
+    const vulkan_dep = pkg_builder.verboseDependency("vulkan_zig", pkg_builder.getOptimize(), pkg_builder.getTarget());
     pkg_builder.installLibraryHeaders(lib, pkg_builder.artifact(vulkan_dep, "vulkan"));
 
     switch (pkg_builder.getOs()) {
@@ -76,9 +76,9 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         .freebsd => {
-            if (pkg_builder.verboseDependencyLazy("X11_zig")) |x11_dep| {
-                if (pkg_builder.verboseDependencyLazy("wayland_zig")) |wayland_dep| {
-                    if (pkg_builder.verboseDependencyLazy("evdev_zig")) |evdev_dep| {
+            if (pkg_builder.verboseDependencyLazy("X11_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |x11_dep| {
+                if (pkg_builder.verboseDependencyLazy("wayland_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |wayland_dep| {
+                    if (pkg_builder.verboseDependencyLazy("evdev_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |evdev_dep| {
                         const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                         const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
                         const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
@@ -104,8 +104,8 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         .netbsd, => {
-            if (pkg_builder.verboseDependencyLazy("X11_zig")) |x11_dep| {
-                if (pkg_builder.verboseDependencyLazy("evdev_zig")) |evdev_dep| {
+            if (pkg_builder.verboseDependencyLazy("X11_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |x11_dep| {
+                if (pkg_builder.verboseDependencyLazy("evdev_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |evdev_dep| {
                     const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                     const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
 
@@ -130,8 +130,8 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         .openbsd => {
-            if (pkg_builder.verboseDependencyLazy("X11_zig")) |x11_dep| {
-                if (pkg_builder.verboseDependencyLazy("evdev_zig")) |evdev_dep| {
+            if (pkg_builder.verboseDependencyLazy("X11_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |x11_dep| {
+                if (pkg_builder.verboseDependencyLazy("evdev_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |evdev_dep| {
                     const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                     const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
 
@@ -156,8 +156,8 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
             }
         },
         else => {
-            if (pkg_builder.verboseDependencyLazy("X11_zig")) |x11_dep| {
-                if (pkg_builder.verboseDependencyLazy("wayland_zig")) |wayland_dep| {
+            if (pkg_builder.verboseDependencyLazy("X11_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |x11_dep| {
+                if (pkg_builder.verboseDependencyLazy("wayland_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |wayland_dep| {
                     const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                     const wayland_artifact = pkg_builder.artifact(wayland_dep, "wayland");
 
