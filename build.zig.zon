@@ -24,6 +24,10 @@
             .url = "git+https://github.com/tiawl/vulkan.zig?ref=toolbox-2.2.6#ec571fe89ecf136a844eeca3e797bdd628da101c",
             .hash = "vulkan_zig-1.0.0-p2wg3mHzjwEkaILBxGMfhFp0f3gjA8oPLBIo2sIdsgEG",
         },
+        .evdev_zig = .{
+            .url = "git+https://github.com/thearchivalone/glfw-evdev.zig.git#96ecfccd246af7dfcc90e3001ae9bedb803fa07e",
+            .hash = "evdev_zig-7.2.0-wqdBTFgKAQCCmSD1UYYQt2MofdOTt1rX0G7Ns0drywwf",
+        },
     },
     .minimum_zig_version = "0.17.0",
     .fingerprint = 0xcba456a5a3d8bb36,
