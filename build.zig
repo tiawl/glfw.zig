@@ -34,11 +34,20 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
     const vulkan_dep = pkg_builder.verboseDependency("vulkan_zig");
     pkg_builder.installLibraryHeaders(lib, pkg_builder.artifact(vulkan_dep, "vulkan"));
 
-    if (pkg_builder.getOs() == .freebsd) {
-        const evdev_dep = pkg_builder.verboseDependency("evdev_zig");
-        const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
-        pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, evdev_artifact);
-        pkg_builder.installLibraryHeaders(lib, evdev_artifact);
+    // Support all current zig BSD targets with the evdev port using Switch Fallthrough
+    sw: switch (pkg_builder.getOs()) {
+        .freebsd =>
+            continue :sw .netbsd,
+        .netbsd =>
+            continue :sw .openbsd,
+        .openbsd => {
+            const evdev_dep = pkg_builder.verboseDependency("evdev_zig");
+            const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
+            pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, evdev_artifact);
+            pkg_builder.installLibraryHeaders(lib, evdev_artifact);
+            pkg_builder.addInclude(lib, &.{ "evdev", "include" });
+        },
+        else => {}
     }
 
     switch (pkg_builder.getOs()) {

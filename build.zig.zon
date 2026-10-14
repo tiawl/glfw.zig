@@ -25,8 +25,8 @@
             .hash = "vulkan_zig-1.0.0-p2wg3mHzjwEkaILBxGMfhFp0f3gjA8oPLBIo2sIdsgEG",
         },
         .evdev_zig = .{
-            .url = "git+https://github.com/thearchivalone/glfw-evdev.zig.git#96ecfccd246af7dfcc90e3001ae9bedb803fa07e",
-            .hash = "evdev_zig-7.2.0-wqdBTFgKAQCCmSD1UYYQt2MofdOTt1rX0G7Ns0drywwf",
+            .url = "git+https://github.com/thearchivalone/glfw-evdev.zig.git#23078040cb6783c43d96f1a55122e1eb6f2c7497",
+            .hash = "evdev_zig-7.2.0-wqdBTDchAQDkJHAwmytrpJ4lLtNYcbKI46l0LcIlRrOq",
         },
     },
     .minimum_zig_version = "0.17.0",
