@@ -7,22 +7,22 @@
             .hash = "N-V-__8AACdFSgBQD7teB9tbCMkV6CbZOAg67Mu3sMAakG0G",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=zig-nightly#ccc4fb3b5308d9044fbb0cdb081623ff2e3c33e2",
-            .hash = "toolbox-2.2.6-kRAu4AGbAAATZggDsAt1qoiFAE14iqM5J-46APmctUkP",
+            .url = "git+https://github.com/tiawl/toolbox?ref=2.3.0#b21fce37bf4964add79107c0372ec9100320888c",
+            .hash = "toolbox-2.3.0-kRAu4N2aAAB5Jbej3uwesjzE4zEuAAmHaX1Kiylwevrb",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=zig-nightly#5f3bc33ac0511c66bcc56309960f2e6b82cc7f8e",
-            .hash = "wayland_zig-1.0.0-JmY-jw57CgBU2xKllacnPg8wljSn6bEU3qJw7m1FqXVb",
+            .url = "git+https://github.com/tiawl/wayland.zig?ref=toolbox-2.3.0#127691212afbbdfe7c00184f311e9867780eff1a",
+            .hash = "wayland_zig-1.0.0-JmY-jwh7CgBM4eQzYTTMsCKbleyi8WjoNE0wULRNHSYY",
             .lazy = true,
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=zig-nightly#160a5765e44807ea8139d5469a180067e6ef49c1",
-            .hash = "X11_zig-1.0.0-UuAzbO_1wQD13rYfvsOj7f2QGDPLVMTZPSXyZrGt1-Oq",
+            .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.3.0#5977a332fb7a3d616c97e3519a4f7549480e32a6",
+            .hash = "X11_zig-1.0.0-UuAzbOn1wQA_IQ9P0tpNnk_Fo1KrOqftQuIHxZaQ9BdD",
             .lazy = true,
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=zig-nightly#eb19da42a2286509ec6a7f25dfd17f9d55daccd6",
-            .hash = "vulkan_zig-1.0.0-p2wg3s_zjwFb7-JQRJxgA6n8jURTklwmAv8xRGX0V0WS",
+            .url = "git+https://github.com/tiawl/vulkan.zig?ref=toolbox-2.3.0#e79015ba2ea6e03a2dddd41ed83697c11cedfa30",
+            .hash = "vulkan_zig-1.0.0-p2wg3snzjwGQX3_u0YOHHAUC57FwE1T3VV4KHMmzvyEX",
         },
         .evdev_zig = .{
             .url = "git+https://github.com/thearchivalone/glfw-evdev.zig.git#b544c47a0871cd2ab7fc38bb4ee094ea3c712222",
