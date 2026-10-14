@@ -103,13 +103,13 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
                 }
             }
         },
-        .netbsd, => {
+        .netbsd => {
             if (pkg_builder.verboseDependencyLazy("X11_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |x11_dep| {
                 if (pkg_builder.verboseDependencyLazy("evdev_zig", pkg_builder.getOptimize(), pkg_builder.getTarget())) |evdev_dep| {
                     const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                     const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
 
-                    for ([_]*std.Build.Step.Compile{ evdev_artifact, x11_artifact}) |artifact| {
+                    for ([_]*std.Build.Step.Compile{ evdev_artifact, x11_artifact }) |artifact| {
                         pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, artifact);
                         pkg_builder.linkLibrary(lib, artifact);
                         pkg_builder.installLibraryHeaders(lib, artifact);
@@ -135,7 +135,7 @@ fn buildFn(pkg_builder: *VerboseBuilder) !void {
                     const x11_artifact = pkg_builder.artifact(x11_dep, "X11");
                     const evdev_artifact = pkg_builder.artifact(evdev_dep, "evdev");
 
-                    for ([_]*std.Build.Step.Compile{ evdev_artifact, x11_artifact}) |artifact| {
+                    for ([_]*std.Build.Step.Compile{ evdev_artifact, x11_artifact }) |artifact| {
                         pkg_builder.addIncludePathsFromLib(@TypeOf(lib.*), lib, artifact);
                         pkg_builder.linkLibrary(lib, artifact);
                         pkg_builder.installLibraryHeaders(lib, artifact);
