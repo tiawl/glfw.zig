@@ -16,8 +16,8 @@
             .lazy = true,
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.3.0#5977a332fb7a3d616c97e3519a4f7549480e32a6",
-            .hash = "X11_zig-1.0.0-UuAzbOn1wQA_IQ9P0tpNnk_Fo1KrOqftQuIHxZaQ9BdD",
+            .url = "git+https://github.com/tiawl/X11.zig?ref=libX11-1.8.14#d3b990c46df844e441e8d03b371263d601421c54",
+            .hash = "X11_zig-1.0.0-UuAzbH39wQCn0iCQk7tSjmCv4A8R5D81kXNX19RYcRZ0",
             .lazy = true,
         },
         .vulkan_zig = .{
