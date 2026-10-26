@@ -10,14 +10,9 @@ on:
 
 jobs:
   linter:
-    strategy:
-      matrix:
-        zig-version:
-          - latest
-          - master
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
@@ -30,21 +25,16 @@ jobs:
       - name: Setup zig
         uses: mlugg/setup-zig@v2
         with:
-          version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
+          version: 'master'
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
       - name: Check zig is canonical
         shell: 'bash'
         run: zig fmt --check .
 
   maintainance:
-    strategy:
-      matrix:
-        zig-version:
-          - latest
-          - master
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
@@ -57,8 +47,8 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
+          version: 'master'
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Test updating
         shell: 'bash'
@@ -67,16 +57,13 @@ jobs:
   build:
     strategy:
       matrix:
-        zig-version:
-          - latest
-          - master
         os:
           - ubuntu-24.04
           - windows-2025
             # TODO add it again later: - macos-15
     runs-on: "${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: "${{ github.event.pull_request.head.repo.full_name }}"
           ref: "${{ github.event.pull_request.head.ref }}"
@@ -85,12 +72,19 @@ jobs:
         run: |
           set -x
           printf 'sha=%s\n' "$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+      - name: Remove Strawberry pkg-config
+        if: matrix.repo == ''
+        shell: pwsh
+        run: |
+          if (Test-Path "C:\Strawberry\perl\bin\pkg-config.bat") {
+            Rename-Item "C:\Strawberry\perl\bin\pkg-config.bat" "pkg-config.bat.disabled"
+          }
 
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
+          version: 'master'
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Test updating
         shell: 'bash'
@@ -99,9 +93,6 @@ jobs:
   user:
     strategy:
       matrix:
-        zig-version:
-          - latest
-          - master
         os:
           - ubuntu-24.04
           - windows-2025
@@ -116,7 +107,7 @@ jobs:
           - os: macos-15
     runs-on: "${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: "${{ github.repository_owner }}/${{ matrix.repo }}.zig"
           ref: "${{ github.event.pull_request.base.ref }}"
@@ -130,8 +121,8 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: "${{ matrix.zig-version }}"
-          cache-key: "${{ github.job }}_${{ runner.os }}_zig-${{ matrix.zig-version }}_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
+          version: 'master'
+          cache-key: "${{ github.job }}_${{ runner.os }}_zig_${{ matrix.repo || '' }}_${{ steps.lastcommit.outputs.sha }}"
 
       - name: Prepare ${{ matrix.repo }}.zig/build.zig.zon
         env:
