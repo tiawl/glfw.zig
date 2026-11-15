@@ -57,7 +57,7 @@ jobs:
       - name: Setup Zig
         uses: mlugg/setup-zig@v2
         with:
-          version: 'latest'
+          version: 'master'
       - name: Setup git user information
         env:
           CHILD_BRANCH: "bot/${{ github.event.repository.default_branch }}"
