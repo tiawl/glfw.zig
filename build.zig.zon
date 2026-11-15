@@ -7,22 +7,22 @@
             .hash = "N-V-__8AACdFSgBQD7teB9tbCMkV6CbZOAg67Mu3sMAakG0G",
         },
         .toolbox = .{
-            .url = "git+https://github.com/tiawl/toolbox?ref=2.3.0#b21fce37bf4964add79107c0372ec9100320888c",
-            .hash = "toolbox-2.3.0-kRAu4N2aAAB5Jbej3uwesjzE4zEuAAmHaX1Kiylwevrb",
+            .url = "git+https://github.com/tiawl/toolbox?ref=2.3.1#b91fef3ad72b3a2d2ad8a6eceba00c5d1701d2a6",
+            .hash = "toolbox-2.3.1-kRAu4OOaAAA15_4GKy9PeeZXvdc3s0JQnwUz3cpQe2u9",
         },
         .wayland_zig = .{
-            .url = "git+https://github.com/tiawl/wayland.zig?ref=wayland-protocols-1.50#b1b49590a37b27aa2b036523aaebde54d5325cdd",
-            .hash = "wayland_zig-1.0.0-JmY-jxN7CgCDjeP2m_bHtGSStbjtT1ocd8jiL5-5dZmD",
+            .url = "git+https://github.com/tiawl/wayland.zig?ref=toolbox-2.3.1#2e885a8d6d6e980aa82a2ce011d84d7a4a89123d",
+            .hash = "wayland_zig-1.0.0-JmY-jxd7CgCP9BXBoYfqVI3iYP_1BKtq35WyQ_zxbBsM",
             .lazy = true,
         },
         .X11_zig = .{
-            .url = "git+https://github.com/tiawl/X11.zig?ref=libX11-1.8.14#d3b990c46df844e441e8d03b371263d601421c54",
-            .hash = "X11_zig-1.0.0-UuAzbH39wQCn0iCQk7tSjmCv4A8R5D81kXNX19RYcRZ0",
+            .url = "git+https://github.com/tiawl/X11.zig?ref=toolbox-2.3.1#3272324c47091e3b3af80baeafc40687ac5ebcfe",
+            .hash = "X11_zig-1.0.0-UuAzbIH9wQBmykX6zda8JGzvm5Fv8keiCrfdtSOzkKFb",
             .lazy = true,
         },
         .vulkan_zig = .{
-            .url = "git+https://github.com/tiawl/vulkan.zig?ref=v1.4.367#863fdbbaa71431d4da19e190b8a9f9cc2825acc4",
-            .hash = "vulkan_zig-1.0.2-p2wg3pXwkAFVH02TXtToYrzFTW5uV0G4pThd-YRXYVvQ",
+            .url = "git+https://github.com/tiawl/vulkan.zig?ref=toolbox-2.3.1#de22c12306162c5b679f6fb4dff800f242fc7f4b",
+            .hash = "vulkan_zig-1.0.3-p2wg3pnwkAH9I38iwvYtC_rGJwrMTW36CwecZHDL-WMN",
         },
         .evdev_zig = .{
             .url = "git+https://github.com/thearchivalone/glfw-evdev.zig.git#b544c47a0871cd2ab7fc38bb4ee094ea3c712222",
@@ -30,7 +30,7 @@
             .lazy = true,
         },
     },
-    .minimum_zig_version = "0.17.0",
+    .minimum_zig_version = "0.18.0-dev",
     .fingerprint = 0xcba456a5a3d8bb36,
     .paths = .{
         "build.zig",
